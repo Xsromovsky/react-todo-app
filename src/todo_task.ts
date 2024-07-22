@@ -1,5 +1,4 @@
-export type TodoTask = {
+export type TodoTasksList = {
     title: string,
-    description: string,
-    id: number,
+    id: string,
 }
