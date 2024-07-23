@@ -19,7 +19,7 @@ const TodoList = (props: Props) => {
 
   return (
     
-    <div >
+    <div className='flex flex-wrap gap-3 justify-center '>
         {renderedTasks}
     </div>
   )
