@@ -1,12 +1,15 @@
 import React from 'react'
 import { TodoTasksList } from '../todo_task'
 import TodoTask from './TodoTask';
+import { createPortal } from 'react-dom';
 
 type Props = {
     todos: TodoTasksList[];
     onDelete: (id: string) => void;
-    onEdit: (id: string) => void;
+    onEdit: (id: string, newTitle: string) => void;
 }
+
+
 
 const TodoList = (props: Props) => {
 
@@ -15,7 +18,8 @@ const TodoList = (props: Props) => {
     })
 
   return (
-    <div>
+    
+    <div >
         {renderedTasks}
     </div>
   )

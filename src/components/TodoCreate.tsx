@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import { TodoTasksList } from '../todo_task';
+import React, { useState } from 'react';
 
 type Props = {
     onCreate: (title: string) => void

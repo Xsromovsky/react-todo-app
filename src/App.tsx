@@ -25,8 +25,20 @@ function App() {
     setTodos(updatedTodos);
   }
 
-  const editTodoById = async (id: string) => {
-    const response = await axios.put(`http://localhost:3001/todos/${id}`)
+  const editTodoById = async (id: string, newTitle: string) => {
+    const response = await axios.put(`http://localhost:3001/todos/${id}`,{
+      title: newTitle
+    });
+    const updatedTodos = todos.map((todo) =>{
+      if(todo.id === id){
+        return {
+          ...todo,
+          ...response.data,
+        };
+      }
+      return todo;
+    });
+    setTodos(updatedTodos)
 
   }
 
@@ -51,6 +63,7 @@ function App() {
     <div className="">
       <TodoCreate onCreate={createTodo}/>
       <TodoList todos={todos} onDelete={deletoTodoById} onEdit={editTodoById}/>
+      
     </div>
   );
 }
