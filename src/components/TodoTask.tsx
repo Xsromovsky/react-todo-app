@@ -30,7 +30,7 @@ const TodoTask = (props: Props) => {
 
   const handleOpenEditClick = () => {
     setShowEdit(true);
-    console.log("shoedit: ", showEdit);
+    console.log("show edit: ", showEdit);
   };
 
   const handleDeleteClick = () => {
@@ -50,10 +50,6 @@ const TodoTask = (props: Props) => {
       }
     )
   );
-
-  const editMe = () => {
-    <TodoEdit todo={props.todo} onEdit={props.onEdit} />;
-  };
 
   return (
     <div>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { TodoTasksList } from "../todo_task";
 import * as Dialog from "@radix-ui/react-dialog";
-import { Cross1Icon, Pencil1Icon } from "@radix-ui/react-icons";
+import { Pencil1Icon } from "@radix-ui/react-icons";
 
 type Props = {
   todo: TodoTasksList;
@@ -40,7 +40,11 @@ const TodoEdit = (props: Props) => {
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <Dialog.Content className="relative bg-[#231c35] h-3/6 w-4/12 p-2 rounded-lg text-white">
+          <Dialog.Content
+            className="relative bg-[#231c35] h-3/6 w-4/12 p-2 rounded-lg text-white"
+            aria-labelledby="edit-task-title"
+            aria-describedby="edit-task-description"
+          >
             <Dialog.Title className="justify-center flex mt-2">
               Edit Task
             </Dialog.Title>
