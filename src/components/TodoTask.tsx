@@ -71,7 +71,7 @@ const TodoTask = (props: Props) => {
           <span>
             <TodoEdit todo={props.todo} onEdit={props.onEdit} />
           </span>
-          <span onClick={handleDeleteClick}>
+          <span onClick={handleDeleteClick} className="cursor-pointer">
             <MdDelete />
           </span>
         </div>
