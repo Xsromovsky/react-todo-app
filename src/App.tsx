@@ -40,9 +40,10 @@ function App() {
     setTodos(updatedTodos);
   };
 
-  const createTodo = async (title: string) => {
+  const createTodo = async (title: string, description: string) => {
     const response = await axios.post(`http://localhost:3001/todos`, {
       title,
+      description
     });
     const newTodos = [...todos, response.data];
     setTodos(newTodos);
