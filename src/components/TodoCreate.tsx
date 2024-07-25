@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import * as Form from "@radix-ui/react-form";
 import * as Dialog from "@radix-ui/react-dialog";
 import DialogModal from "./DialogModal";
+import TodosContext from "../contexts/TodoContext";
 
 type Props = {
-  onCreate: (title: string, description: string) => void;
 };
 
 const TodoCreate = (props: Props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const todosContext = useContext(TodosContext);
 
   const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -21,7 +22,8 @@ const TodoCreate = (props: Props) => {
   };
   const handleSubmit = (event: React.FormEvent) => {
     // event.preventDefault();
-    props.onCreate(title, description);
+    // props.onCreate(title, description);
+    todosContext.createTodo(title, description, false);
     setDescription("");
     setTitle("");
   };

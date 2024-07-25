@@ -3,32 +3,38 @@ import { TodoTasksList } from "../todo_task";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Pencil1Icon } from "@radix-ui/react-icons";
 import DialogModal from "./DialogModal";
+import useTodosContext from "../hooks/useTodosContext";
 
 type Props = {
   todo: TodoTasksList;
   //   show: boolean;
   //   // onShow: () => {},
   //   onHide: () => void;
-  onEdit: (id: string, newTitle: string, newDescription: string) => void;
+//   onEdit: (id: string, todo: TodoTasksList) => void;
 };
 
 const TodoEdit = (props: Props) => {
   const [newTitle, setNewTitle] = useState(props.todo.title);
   const [newDescription, setNewDescription] = useState(props.todo.description);
+  const todosContext = useTodosContext();
 
   const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     setNewTitle(event.target.value);
+    props.todo.title = event.target.value;
+
   };
   const handleChangeTextArea = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     setNewDescription(event.target.value);
+    props.todo.description = event.target.value;
   };
 
   const handleSaveClick = () => {
     if (newTitle.trim()) {
-      props.onEdit(props.todo.id, newTitle, newDescription);
+    //   props.onEdit(props.todo.id, props.todo);
+    todosContext.editTodoById(props.todo.id, props.todo);
     }
   };
 
