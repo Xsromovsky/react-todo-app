@@ -10,7 +10,7 @@ type Props = {
   //   show: boolean;
   //   // onShow: () => {},
   //   onHide: () => void;
-//   onEdit: (id: string, todo: TodoTasksList) => void;
+  //   onEdit: (id: string, todo: TodoTasksList) => void;
 };
 
 const TodoEdit = (props: Props) => {
@@ -22,7 +22,6 @@ const TodoEdit = (props: Props) => {
     event.preventDefault();
     setNewTitle(event.target.value);
     props.todo.title = event.target.value;
-
   };
   const handleChangeTextArea = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -33,30 +32,32 @@ const TodoEdit = (props: Props) => {
 
   const handleSaveClick = () => {
     if (newTitle.trim()) {
-    //   props.onEdit(props.todo.id, props.todo);
-    todosContext.editTodoById(props.todo.id, props.todo);
+      //   props.onEdit(props.todo.id, props.todo);
+      todosContext.editTodoById(props.todo.id, props.todo);
     }
+  };
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    todosContext.editTodoById(props.todo.id, props.todo);
+    console.log(newTitle);
   };
 
   return (
-    <DialogModal>
-      <DialogModal.Button>
-        <Pencil1Icon />
-      </DialogModal.Button>
+    <form onSubmit={handleSubmit}>
       <DialogModal.Content title="Edit Task">
-          <fieldset className="space-x-2 flex items-center">
-            <input
-              value={newTitle}
-              className=" rounded-lg p-1 w-full bg-[#242039] border-1 focus:outline-none focus:border-[#6e5774]"
-              onChange={handleChangeInput}
-            />
-          </fieldset>
-          <textarea
-            className="bg-[#242039] rounded-lg text-white mt-2 w-full active:outline-none p-1 h-3/6"
-            placeholder="Task description"
-            value={newDescription}
-            onChange={handleChangeTextArea}
-          ></textarea>
+        <fieldset className="space-x-2 flex items-center">
+          <input
+            value={newTitle}
+            className=" rounded-lg p-1 w-full bg-[#242039] border-1 focus:outline-none focus:border-[#6e5774]"
+            onChange={handleChangeInput}
+          />
+        </fieldset>
+        <textarea
+          className="bg-[#242039] rounded-lg text-white mt-2 w-full active:outline-none p-1 h-3/6"
+          placeholder="Task description"
+          value={newDescription}
+          onChange={handleChangeTextArea}
+        ></textarea>
         <div className="flex justify-end">
           <Dialog.Close>
             <button className="hover:bg-[#2a2b47] p-2  rounded-full">
@@ -73,7 +74,7 @@ const TodoEdit = (props: Props) => {
           </Dialog.Close>
         </div>
       </DialogModal.Content>
-    </DialogModal>
+    </form>
   );
 };
 
