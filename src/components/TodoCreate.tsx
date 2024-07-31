@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
-import * as Form from "@radix-ui/react-form";
 import * as Dialog from "@radix-ui/react-dialog";
 import DialogModal from "./DialogModal";
 import TodosContext from "../contexts/TodoContext";
+import { Outlet, useNavigate } from "react-router-dom";
 
 type Props = {};
 
@@ -10,6 +10,7 @@ const TodoCreate = (props: Props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const todosContext = useContext(TodosContext);
+  const navigate = useNavigate();
 
   const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -25,6 +26,13 @@ const TodoCreate = (props: Props) => {
     todosContext.createTodo(title, description, false);
     setDescription("");
     setTitle("");
+  };
+
+  const handleProfileRedirect = () => {
+    navigate("/profile-page");
+  };
+  const handleLogout = () => {
+    navigate('/');
   };
 
   return (
@@ -69,6 +77,7 @@ const TodoCreate = (props: Props) => {
           </div>
         </DialogModal.Content>
       </DialogModal>
+
     </div>
   );
 };

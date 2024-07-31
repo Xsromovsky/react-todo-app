@@ -3,4 +3,9 @@ export type TodoTasksList = {
     description: string,
     id: string,
     isDone: boolean,
+    
+}
+
+export type TaskFlag = {
+    taskFlag: string
 }

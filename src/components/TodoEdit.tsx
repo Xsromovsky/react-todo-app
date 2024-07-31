@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { TodoTasksList } from "../todo_task";
+import { TodoTasksList } from "../utils/todo_task";
 import * as Dialog from "@radix-ui/react-dialog";
-import { Pencil1Icon } from "@radix-ui/react-icons";
 import DialogModal from "./DialogModal";
 import useTodosContext from "../hooks/useTodosContext";
 

@@ -1,13 +1,18 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 
 import "./App.css";
 
-import { TodoTasksList } from "./todo_task";
 import TodoTask from "./components/TodoTask";
-import axios from "axios";
 import TodoList from "./components/TodoList";
 import TodoCreate from "./components/TodoCreate";
 import TodosContext from "./contexts/TodoContext";
+import SideBar from "./components/SideBar";
+import LoginPage from "./pages/LoginPage";
+import TodoPage from "./pages/TodoPage";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Nopage from "./pages/Nopage";
+import ProfilePage from "./pages/ProfilePage";
+import TaskHistory from "./pages/TaskHistory";
 
 function App() {
   // const [todos, setTodos] = useState<TodoTasksList[]>([]);
@@ -18,71 +23,20 @@ function App() {
     todosContext.fetchTodos();
   }, []);
 
-  // const fetchTodos = async () => {
-  //   const response = await axios.get("http://localhost:3001/todos");
-  //   setTodos(response.data);
-  // };
-
-  // const deletoTodoById = async (id: string) => {
-  //   await axios.delete(`http://localhost:3001/todos/${id}`);
-  //   const updatedTodos = todos.filter((todo) => {
-  //     return todo.id !== id;
-  //   });
-  //   setTodos(updatedTodos);
-  // };
-
-  // const editTodoById = async (id: string, todo: TodoTasksList) => {
-  //   const response = await axios.put(`http://localhost:3001/todos/${id}`, todo);
-  //   const updatedTodos = todos.map((todo) => {
-  //     if (todo.id === id) {
-  //       return {
-  //         ...todo,
-  //         ...response.data,
-  //       };
-  //     }
-  //     return todo;
-  //   });
-  //   setTodos(updatedTodos);
-  // };
-
-  // const createTodo = async (
-  //   title: string,
-  //   description: string,
-  //   isDone: boolean = false
-  // ) => {
-  //   const response = await axios.post(`http://localhost:3001/todos`, {
-  //     title,
-  //     description,
-  //     isDone,
-  //   });
-  //   const newTodos = [...todos, response.data];
-  //   setTodos(newTodos);
-  // };
-
-  // const markTask = async (id: string, isDone: boolean) => {
-  //   const response = await axios.put(`http://localhost:3001/todos/${id}`, {
-  //     isDone,
-  //   });
-  //   const updatedTodos = todos.map((todo) => {
-  //     if (todo.id === id) {
-  //       return {
-  //         ...todo,
-  //         ...response.data,
-  //       };
-  //     }
-  //     return todo;
-  //   });
-  //   setTodos(updatedTodos);
-  //   console.log('do something');
-  // };
 
   return (
-    <div className="bg-[#231c35] min-h-screen">
-      <TodoCreate />
-      <div className="m-4">
-        <TodoList />
-      </div>
-    </div>
+    <>
+
+     <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/home" element={<TodoPage />} />
+        <Route path="/history" element={<TaskHistory/>}/>
+        <Route path="/profile" element={<ProfilePage/>}></Route>
+        <Route path="*" element={<Nopage />} />
+      </Routes>
+    </BrowserRouter>
+    </>
   );
 }
 

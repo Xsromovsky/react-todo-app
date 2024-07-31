@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { MdDelete } from "react-icons/md";
-import { TodoTasksList } from "../todo_task";
+import { TodoTasksList } from "../utils/todo_task";
 import TodoEdit from "./TodoEdit";
 import * as Checkbox from "@radix-ui/react-checkbox";
 import { CheckIcon } from "@radix-ui/react-icons";
@@ -31,6 +31,7 @@ const TodoTask = (props: Props) => {
     props.todo.isDone = !props.todo.isDone;
     // props.onEdit(props.todo.id, props.todo);
     todosContext.editTodoById(props.todo.id, props.todo);
+    
   };
 
   const markTitle = twMerge(
@@ -48,7 +49,7 @@ const TodoTask = (props: Props) => {
       <DialogModal>
         <DialogModal.Button>
           <form className={markTitle}>
-            <div className="space-x-1 flex items-center truncate">
+            <div className=" flex items-center truncate">
               <Checkbox.Root
                 className="flex-shrink-0 text-[#5b5271] hover:bg-red flex h-5 w-5 items-center justify-center rounded-[4px] bg-white"
                 id={props.todo.id}
@@ -59,9 +60,7 @@ const TodoTask = (props: Props) => {
                   <CheckIcon />
                 </Checkbox.Indicator>
               </Checkbox.Root>
-              <div className="">
-                <p className="m-0">{props.todo.title}</p>
-              </div>
+                <p className="m-0 px-1">{props.todo.title}</p>
             </div>
             <div className="items-center flex">
               <span onClick={handleDeleteClick} className="cursor-pointer">
@@ -75,10 +74,7 @@ const TodoTask = (props: Props) => {
         </DialogModal.Content>
       </DialogModal>
     </div>
-    // <div className="bg-yellow-300 w-[300px] text-red-600">
-    //   <p className="truncate">{props.todo.title}</p>
-    //   <span className="truncate"></span>
-    // </div>
+
   );
 };
 
