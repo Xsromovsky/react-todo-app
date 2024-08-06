@@ -1,7 +1,7 @@
 export type TodoTasksList = {
     title: string,
     description: string,
-    id: string,
+    id: number,
     isDone: boolean,
     
 }

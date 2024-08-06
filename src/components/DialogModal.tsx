@@ -18,18 +18,20 @@ const DialogModal = (props: Props) => {
 type ContentProps = {
   title: string;
   children: React.ReactNode;
+  contentClassname?: string;
+  overlayClassname?: string;
 };
 
 function ModalContent(props: ContentProps) {
   return (
     <Dialog.Portal>
-      <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center text-white">
-        <Dialog.Content className="relative bg-[#231c35]  w-4/12 p-2 rounded-lg text-white">
+      <Dialog.Overlay className={props.overlayClassname}>
+        <Dialog.Content className={props.contentClassname}>
           <Dialog.Title 
             className="flex justify-center mt-1"
-            id="create-task-title">
-            {props.title}
-          </Dialog.Title>
+            id="create-task-title"
+            title={props.title}
+            />
           <div className="m-4">
             {props.children}
           </div>

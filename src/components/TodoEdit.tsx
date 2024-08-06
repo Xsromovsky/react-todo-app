@@ -38,12 +38,15 @@ const TodoEdit = (props: Props) => {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     todosContext.editTodoById(props.todo.id, props.todo);
-    console.log(newTitle);
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <DialogModal.Content title="Edit Task">
+      <DialogModal.Content
+        title="Edit Task"
+        contentClassname="relative bg-[#231c35]  w-4/12 p-2 rounded-lg text-white"
+        overlayClassname="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center text-white"
+      >
         <fieldset className="space-x-2 flex items-center">
           <input
             value={newTitle}

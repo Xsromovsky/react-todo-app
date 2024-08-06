@@ -31,9 +31,9 @@ const TodoTask = (props: Props) => {
     props.todo.isDone = !props.todo.isDone;
     // props.onEdit(props.todo.id, props.todo);
     todosContext.editTodoById(props.todo.id, props.todo);
-    
+    console.log(`this task is checked: ${props.todo.isDone}`)
   };
-
+    
   const markTitle = twMerge(
     classNames(
       "flex px-2 w-[300px] h-10 justify-between text-white rounded-lg  space-x-2",
@@ -52,7 +52,7 @@ const TodoTask = (props: Props) => {
             <div className=" flex items-center truncate">
               <Checkbox.Root
                 className="flex-shrink-0 text-[#5b5271] hover:bg-red flex h-5 w-5 items-center justify-center rounded-[4px] bg-white"
-                id={props.todo.id}
+                id={props.todo.id.toString()}
                 checked={isDone}
                 onClick={handleChecked}
               >

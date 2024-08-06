@@ -1,13 +1,13 @@
 import { createContext, ReactNode, useState } from "react"
 import { TodoTasksList } from "../utils/todo_task"
-import axios from "axios";
+import axios from "../instances/axiosInstance";
 
 type Todos = {
     todos: TodoTasksList[];
     fetchTodos: () => void;
-    deletoTodoById: (id: string) => void;
-    editTodoById: (id: string, todo: TodoTasksList) => void;
-    createTodo: (title: string, description: string, isDone: boolean) => void;
+    deletoTodoById: (id: number) => void;
+    editTodoById: (id: number, todo: TodoTasksList) => void;
+    createTodo: (title: string, description: string) => void;
 }
 
 const TodosContext = createContext<Todos>({} as Todos);
@@ -22,20 +22,20 @@ function Provider(props: ProviderProps) {
 
 
     const fetchTodos = async () => {
-        const response = await axios.get("http://localhost:3001/todos");
+        const response = await axios.get("/task/all");
         setTodos(response.data);
     };
 
-    const deletoTodoById = async (id: string) => {
-        await axios.delete(`http://localhost:3001/todos/${id}`);
+    const deletoTodoById = async (id: number) => {
+        await axios.delete(`/task/${id}`);
         const updatedTodos = todos.filter((todo) => {
             return todo.id !== id;
         });
         setTodos(updatedTodos);
     };
 
-    const editTodoById = async (id: string, todo: TodoTasksList) => {
-        const response = await axios.put(`http://localhost:3001/todos/${id}`, todo);
+    const editTodoById = async (id: number, todo: TodoTasksList) => {
+        const response = await axios.put(`/task/${id}`, todo);
         const updatedTodos = todos.map((todo) => {
             if (todo.id === id) {
                 return {
@@ -51,12 +51,10 @@ function Provider(props: ProviderProps) {
     const createTodo = async (
         title: string,
         description: string,
-        isDone: boolean,
     ) => {
-        const response = await axios.post(`http://localhost:3001/todos`, {
+        const response = await axios.post(`/task/add`, {
             title,
             description,
-            isDone,
         });
         const newTodos = [...todos, response.data];
         setTodos(newTodos);

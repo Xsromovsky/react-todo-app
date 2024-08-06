@@ -23,26 +23,24 @@ const TodoCreate = (props: Props) => {
   const handleSubmit = (event: React.FormEvent) => {
     // event.preventDefault();
     // props.onCreate(title, description);
-    todosContext.createTodo(title, description, false);
+    todosContext.createTodo(title, description);
     setDescription("");
     setTitle("");
   };
 
-  const handleProfileRedirect = () => {
-    navigate("/profile-page");
-  };
-  const handleLogout = () => {
-    navigate('/');
-  };
 
   return (
     <div className="bg-[#2a2b47] flex flex-col items-center p-4 text-white">
       <h2 className="text-3xl mb-4">My personal Todo app</h2>
       <DialogModal>
         <DialogModal.Button asChild>
-          <button className="p-2 rounded-full bg-[#484564]">Create Task</button>
+          <span className="p-2 rounded-full bg-[#484564]">Create Task</span>
         </DialogModal.Button>
-        <DialogModal.Content title="Create new Task">
+        <DialogModal.Content
+          title="Create new Task"
+          contentClassname="relative bg-[#231c35]  w-4/12 p-2 rounded-lg text-white"
+          overlayClassname="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center text-white"
+        >
           <fieldset>
             <input
               type="text"
@@ -77,7 +75,6 @@ const TodoCreate = (props: Props) => {
           </div>
         </DialogModal.Content>
       </DialogModal>
-
     </div>
   );
 };

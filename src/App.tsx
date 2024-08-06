@@ -13,29 +13,33 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Nopage from "./pages/Nopage";
 import ProfilePage from "./pages/ProfilePage";
 import TaskHistory from "./pages/TaskHistory";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import { AuthProvider } from "./contexts/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   // const [todos, setTodos] = useState<TodoTasksList[]>([]);
 
-  const todosContext = useContext(TodosContext);
-
-  useEffect(() => {
-    todosContext.fetchTodos();
-  }, []);
-
+  
 
   return (
     <>
+      <div className="bg-[#231c35] h-screen w-screen">
+        <BrowserRouter>
+          <AuthProvider>
+            <Routes>
+              <Route path="/" element={<LoginPage />} />
+              <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+              <Route path="*" element={<Nopage />} />
 
-     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/home" element={<TodoPage />} />
-        <Route path="/history" element={<TaskHistory/>}/>
-        <Route path="/profile" element={<ProfilePage/>}></Route>
-        <Route path="*" element={<Nopage />} />
-      </Routes>
-    </BrowserRouter>
+              <Route path="/home" element={<ProtectedRoute element={<TodoPage/>}/>} />
+              <Route path="/history" element={<ProtectedRoute element={<TaskHistory/>}/>} />
+              <Route path="/profile" element={<ProtectedRoute element={<ProfilePage/>}/>}/>
+              
+            </Routes>
+          </AuthProvider>
+        </BrowserRouter>
+      </div>
     </>
   );
 }

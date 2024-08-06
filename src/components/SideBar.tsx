@@ -9,11 +9,13 @@ import classNames from "classnames";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
+import useAuthContext from "../hooks/useAuthContext";
 type Props = {};
 
 const SideBar = (props: Props) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const authContext = useAuthContext();
 
   const classes = twMerge(
     classNames(
@@ -46,7 +48,8 @@ const SideBar = (props: Props) => {
   };
   const handleNavigateProfile = () => {
     // event.preventDefault();
-    navigate("/profile");
+    // authContext.fetchProfileData();
+    navigate('/profile');
   };
   const handleNavigateHistory = () => {
     // event.preventDefault();
@@ -54,7 +57,7 @@ const SideBar = (props: Props) => {
   };
   const handleNavigateLogout = () => {
     // event.preventDefault();
-    navigate("/");
+    authContext.logout();
   };
 
   return (
