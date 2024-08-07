@@ -26,7 +26,7 @@ instance.interceptors.response.use(
             originalRequest._retry = true;
             try {
                 const refreshToken = localStorage.getItem('refreshToken');
-                const response = await axios.post('http://localhost:3100/user/refresh_token', { refreshToken });
+                const response = await instance.post('/user/refresh_token', { refreshToken });
                 localStorage.setItem('accessToken', response.data.accessToken);
                 instance.defaults.headers.common['Authorization'] = `Bearer ${response.data.accessToken}`;
                 

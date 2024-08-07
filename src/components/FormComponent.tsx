@@ -16,6 +16,7 @@ type FormControlInputProps = {
   controlClassname?: string;
   isRequired: boolean;
   type: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 function FormControlInput(props: FormControlInputProps) {
@@ -26,6 +27,7 @@ function FormControlInput(props: FormControlInputProps) {
         className={props.controlClassname}
         required={props.isRequired}
         type={props.type}
+        onChange={props.onChange}
       />
     </Form.Control>
   );
@@ -38,8 +40,12 @@ type FormFieldProps = {
   labelMessageClassname?: string;
   useLabel?: boolean;
   useMessage?: boolean;
+  useSecondMessage?: boolean;
   labelName?: string;
   messageName?: string;
+  secondMessageName?: string
+  messageMatch?: string;
+  secondMessageMatch?: string;
 };
 
 function FormField(props: FormFieldProps) {
@@ -49,6 +55,7 @@ function FormField(props: FormFieldProps) {
       <div className={props.labelMessageClassname}>
         {props.useLabel && <Form.Label>{props.labelName || 'label'}</Form.Label>}
         {props.useMessage && <Form.Message match={"valueMissing"} className="text-red-500">{props.messageName || 'Message'}</Form.Message>}
+        {props.useSecondMessage && <Form.Message match={"typeMismatch"} className="text-red-500">{props.secondMessageName || 'Message'}</Form.Message>}
       </div>
       {props.children}
     </Form.Field>

@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import DialogModal from "./DialogModal";
 import TodosContext from "../contexts/TodoContext";
-import { Outlet, useNavigate } from "react-router-dom";
 
 type Props = {};
 
@@ -10,15 +9,18 @@ const TodoCreate = (props: Props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const todosContext = useContext(TodosContext);
-  const navigate = useNavigate();
 
   const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
+    console.log(title);
+    
   };
   const handleChangeTextArea = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     setDescription(event.target.value);
+    console.log(description);
+    
   };
   const handleSubmit = (event: React.FormEvent) => {
     // event.preventDefault();
@@ -38,6 +40,7 @@ const TodoCreate = (props: Props) => {
         </DialogModal.Button>
         <DialogModal.Content
           title="Create new Task"
+          description="Add a new task here"
           contentClassname="relative bg-[#231c35]  w-4/12 p-2 rounded-lg text-white"
           overlayClassname="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center text-white"
         >

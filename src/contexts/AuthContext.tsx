@@ -11,6 +11,7 @@ type UserData = {
 
 type Auth = {
   login: (email: string, password: string) => Promise<void>;
+  signup: (username: string, password: string, email: string) => Promise<void>;
   logout: () => Promise<void>;
   fetchProfileData: () => Promise<void>;
   accessToken: string | null,
@@ -64,7 +65,20 @@ function AuthProvider(props: AuthProviderProps) {
   };
 
   const signup = async (username: string, password: string, email: string)=>{
+    try{
+        console.log(`username: ${username}, password: ${password}, email: ${email}`);
+        
+        const response = await axios.post('/user/signup', {username, password, email})
+        if(response.status === 200){
+            console.log("signup successful");
+            alert("success");
+            
+        }
 
+    }catch(error) {
+        console.log('signing up failed: ', error);
+        
+    }
   }
 
 
@@ -83,7 +97,7 @@ function AuthProvider(props: AuthProviderProps) {
   }
 
   return (
-    <AuthContext.Provider value={{ login, logout, fetchProfileData, isAuthenticated, accessToken, user}}>
+    <AuthContext.Provider value={{ login, logout, fetchProfileData, signup, isAuthenticated, accessToken, user}}>
       {props.children}
     </AuthContext.Provider>
   );

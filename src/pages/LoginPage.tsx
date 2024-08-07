@@ -19,22 +19,12 @@ const LoginPage = (props: Props) => {
     const password = form.get("password") as string;
 
     try {
-      // const response = await axios.post("http://localhost:3100/user/login", {
-      //   email,
-      //   password,
-      // });
-
-      // if (response.status === 200) {
-        
-      //   navigate("/home");
-      // } else {
-      //   alert("Login failed: " + response.data);
-      // }
-      authContext.login(email, password)
+      authContext.login(email, password);
     } catch (error) {
       console.error("There was a problem with the login request:", error);
       alert("An error occurred. Please try again.");
     }
+    console.log("login user");
   };
 
   return (
@@ -42,10 +32,10 @@ const LoginPage = (props: Props) => {
       <div className="flex justify-end">
         <div className="w-[50%] bg-[#2a2b47] h-screen flex justify-center items-center">
           <div className=" bg-[#231c35] h-[400px] w-[400px] text-white rounded-lg">
-            <h3 className="flex justify-center mt-2">Sign in</h3>
-            <div className="flex w-full h-full justify-center items-center ">
+            <div className="flex flex-col w-full h-full items-center">
+              <h3 className="flex justify-center mt-2">Sign in</h3>
               <FormComponent
-                className="p-1 w-full h-full flex flex-col items-center "
+                className="p-1 w-full  mt-5 flex flex-col items-center "
                 handler={handleNavigate}
               >
                 <div className="h-full space-y-2 w-full px-4 flex flex-col justify-center items-center caret-white">
@@ -86,18 +76,19 @@ const LoginPage = (props: Props) => {
                       Sign in
                     </span>
                   </FormComponent.Submit>
-                  <div className="flex w-full justify-between items-center">
-                    <Link
-                      to={"/forgot-password"}
-                      className="text-red-600 hover:text-red-500"
-                    >
-                      Forgot Password?
-                    </Link>
-                    {/* <button className="">Register</button> */}
-                    <RegisterComponent />
-                  </div>
                 </div>
               </FormComponent>
+
+              <div className="flex justify-between w-full px-4">
+                <Link
+                  to={"/forgot-password"}
+                  className="text-red-600 hover:text-red-500"
+                >
+                  Forgot Password?
+                </Link>
+                {/* <button className="">Register</button> */}
+                <RegisterComponent />
+              </div>
             </div>
           </div>
         </div>
