@@ -33,7 +33,6 @@ const TodoEdit = (props: Props) => {
 
   const handleSaveClick = () => {
     if (newTitle.trim()) {
-      
       //   props.onEdit(props.todo.id, props.todo);
       // todosContext.editTaskById(props.todo.id, props.todo);
       props.editTaskById(props.todo.id, props.todo);
@@ -45,7 +44,7 @@ const TodoEdit = (props: Props) => {
   // };
 
   return (
-    <form >
+    <form>
       <DialogModal.Content
         title="Edit Task"
         contentClassname="relative bg-[#231c35] w-4/12 p-2 rounded-lg text-white"
@@ -65,18 +64,14 @@ const TodoEdit = (props: Props) => {
           onChange={handleChangeTextArea}
         ></textarea>
         <div className="flex justify-end">
-          <Dialog.Close>
-            <button className="hover:bg-[#2a2b47] p-2  rounded-full">
-              cancel me
-            </button>
+          <Dialog.Close className="hover:bg-[#2a2b47] p-2 m-2  rounded-full">
+            cancel
           </Dialog.Close>
-          <Dialog.Close>
-            <button
-              className="bg-[#242039] p-2 rounded-full m-2 hover:bg-[#2a2b47]"
-              onClick={handleSaveClick}
-            >
-              Save changes
-            </button>
+          <Dialog.Close
+            className="bg-[#242039] p-2 rounded-full m-2 hover:bg-[#2a2b47]"
+            onClick={handleSaveClick}
+          >
+            Save changes
           </Dialog.Close>
         </div>
       </DialogModal.Content>
