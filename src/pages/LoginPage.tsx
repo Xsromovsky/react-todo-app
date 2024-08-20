@@ -2,13 +2,11 @@ import React from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import FormComponent from "../components/FormComponent";
 import RegisterComponent from "../components/RegisterComponent";
-import axios from "axios";
 import useAuthContext from "../hooks/useAuthContext";
 
 type Props = {};
 
 const LoginPage = (props: Props) => {
-  const navigate = useNavigate();
   const authContext = useAuthContext();
 
   const handleNavigate = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -26,7 +24,7 @@ const LoginPage = (props: Props) => {
     }
     console.log("login user");
   };
-
+  
   return (
     <>
       <div className="flex justify-end">

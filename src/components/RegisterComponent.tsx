@@ -35,8 +35,8 @@ const RegisterComponent = (props: Props) => {
       const email = form.get("email") as string;
       const username = form.get("username") as string;
       authContext.signup(username, password, email);
+      console.log("register user");
     }
-    console.log("register user");
   };
 
   return (

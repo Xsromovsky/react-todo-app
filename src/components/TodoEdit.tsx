@@ -1,21 +1,23 @@
 import React, { useState } from "react";
-import { TodoTasksList } from "../utils/todo_task";
+import { Task } from "../utils/todo_task";
 import * as Dialog from "@radix-ui/react-dialog";
 import DialogModal from "./DialogModal";
 import useTodosContext from "../hooks/useTodosContext";
+import { Todos } from "../contexts/TodoContext";
+import { ProjectApi } from "../contexts/ProjectContext";
 
 type Props = {
-  todo: TodoTasksList;
+  todo: Task;
   //   show: boolean;
   //   // onShow: () => {},
   //   onHide: () => void;
   //   onEdit: (id: string, todo: TodoTasksList) => void;
+  editTaskById: (id: string, todo: Task) => void;
 };
 
 const TodoEdit = (props: Props) => {
   const [newTitle, setNewTitle] = useState(props.todo.title);
   const [newDescription, setNewDescription] = useState(props.todo.description);
-  const todosContext = useTodosContext();
 
   const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -31,20 +33,22 @@ const TodoEdit = (props: Props) => {
 
   const handleSaveClick = () => {
     if (newTitle.trim()) {
+      
       //   props.onEdit(props.todo.id, props.todo);
-      todosContext.editTodoById(props.todo.id, props.todo);
+      // todosContext.editTaskById(props.todo.id, props.todo);
+      props.editTaskById(props.todo.id, props.todo);
     }
   };
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    todosContext.editTodoById(props.todo.id, props.todo);
-  };
+  // const handleSubmit = (event: React.FormEvent) => {
+  //   event.preventDefault();
+  //   todosContext.editTodoById(props.todo.id, props.todo);
+  // };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form >
       <DialogModal.Content
         title="Edit Task"
-        contentClassname="relative bg-[#231c35]  w-4/12 p-2 rounded-lg text-white"
+        contentClassname="relative bg-[#231c35] w-4/12 p-2 rounded-lg text-white"
         overlayClassname="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center text-white"
       >
         <fieldset className="space-x-2 flex items-center">

@@ -13,9 +13,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     
-      <Provider>
+      {/* <Provider> */}
         <App />
-      </Provider>
+      {/* </Provider> */}
     
   </React.StrictMode>
 );

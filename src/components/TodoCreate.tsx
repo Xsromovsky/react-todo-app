@@ -36,7 +36,7 @@ const TodoCreate = (props: Props) => {
       <h2 className="text-3xl mb-4">My personal Todo app</h2>
       <DialogModal>
         <DialogModal.Button asChild>
-          <span className="p-2 rounded-full bg-[#484564]">Create Task</span>
+          <span className="p-2 rounded-full bg-[#484564] hover:bg-[#5b5271]">Create Task</span>
         </DialogModal.Button>
         <DialogModal.Content
           title="Create new Task"

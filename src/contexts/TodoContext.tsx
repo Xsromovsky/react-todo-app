@@ -1,12 +1,12 @@
 import { createContext, ReactNode, useState } from "react"
-import { TodoTasksList } from "../utils/todo_task"
+import { Task } from "../utils/todo_task"
 import axios from "../instances/axiosInstance";
 
-type Todos = {
-    todos: TodoTasksList[];
+export type Todos = {
+    todos: Task[];
     fetchTodos: () => void;
-    deletoTodoById: (id: number) => void;
-    editTodoById: (id: number, todo: TodoTasksList) => void;
+    deletoTodoById: (id: string) => void;
+    editTaskById: (id: string, todo: Task) => void;
     createTodo: (title: string, description: string) => void;
 }
 
@@ -18,24 +18,23 @@ type ProviderProps = {
 
 
 function Provider(props: ProviderProps) {
-    const [todos, setTodos] = useState<TodoTasksList[]>([]);
-
+    const [todos, setTodos] = useState<Task[]>([]);
 
     const fetchTodos = async () => {
-        const response = await axios.get("/task/all");
+        const response = await axios.get("/task/inbox/all");
         setTodos(response.data);
     };
 
-    const deletoTodoById = async (id: number) => {
-        await axios.delete(`/task/${id}`);
+    const deletoTodoById = async (id: string) => {
+        await axios.delete(`/task/inbox/${id}`);
         const updatedTodos = todos.filter((todo) => {
             return todo.id !== id;
         });
         setTodos(updatedTodos);
     };
 
-    const editTodoById = async (id: number, todo: TodoTasksList) => {
-        const response = await axios.put(`/task/${id}`, todo);
+    const editTaskById = async (id: string, todo: Task) => {
+        const response = await axios.put(`/task/inbox`, todo);
         const updatedTodos = todos.map((todo) => {
             if (todo.id === id) {
                 return {
@@ -52,7 +51,7 @@ function Provider(props: ProviderProps) {
         title: string,
         description: string,
     ) => {
-        const response = await axios.post(`/task/add`, {
+        const response = await axios.post(`/task/inbox/add`, {
             title,
             description,
         });
@@ -63,7 +62,7 @@ function Provider(props: ProviderProps) {
         todos,
         fetchTodos,
         deletoTodoById,
-        editTodoById,
+        editTaskById,
         createTodo
     };
     

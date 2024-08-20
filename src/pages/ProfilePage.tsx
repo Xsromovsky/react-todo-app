@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import SideBar from "../components/SideBar";
 import tiborImage from "../images/hlava_tibor.png";
 import useAuthContext from "../hooks/useAuthContext";
+import HeaderComponent from "../components/HeaderComponent";
 
 type Props = {};
 
@@ -12,25 +13,18 @@ const ProfilePage = (props: Props) => {
 
   // authContext.fetchProfileData();
 
-  useEffect(()=>{
-    authContext.fetchProfileData()
-  },[])
+  useEffect(() => {
+    authContext.fetchProfileData();
+  }, []);
 
   return (
-    <div className="bg-[#231c35] flex text-white h-screen">
+    <div className="flex h-screen">
       <SideBar />
-      <div className="flex items-center flex-1 flex-col">
-        <div>
-          <h1>profile page</h1>
-        </div>
-        <p>
-        {authContext.user.email}
-        </p>
-        <p>
-        {authContext.user.name}
-        </p>
+      <div className="w-full">
+        <HeaderComponent title="Profile">
+          <h3>{authContext.user.name}</h3>
+        </HeaderComponent>
       </div>
-     
     </div>
   );
 };

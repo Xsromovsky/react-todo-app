@@ -1,4 +1,5 @@
 import {
+  ArchiveIcon,
   ClockIcon,
   ExitIcon,
   HomeIcon,
@@ -46,6 +47,9 @@ const SideBar = (props: Props) => {
     // event.preventDefault();
     navigate("/home");
   };
+  const handleProjects = () => {
+    navigate("/projects");
+  }
   const handleNavigateProfile = () => {
     // event.preventDefault();
     // authContext.fetchProfileData();
@@ -72,6 +76,10 @@ const SideBar = (props: Props) => {
           <li className={itemClass} onClick={handleNavigateHome}>
             <HomeIcon className="size-[25px]" />
             <label className={labelClass}>Home</label>
+          </li>
+          <li className={itemClass} onClick={handleProjects}>
+            <ArchiveIcon className="size-[25px]" />
+            <label className={labelClass}>Projects</label>
           </li>
           <li className={itemClass} onClick={handleNavigateProfile}>
             <PersonIcon className="size-[25px]" />

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { MdDelete } from "react-icons/md";
-import { TodoTasksList } from "../utils/todo_task";
+import { Task } from "../utils/todo_task";
 import TodoEdit from "./TodoEdit";
 import * as Checkbox from "@radix-ui/react-checkbox";
 import { CheckIcon } from "@radix-ui/react-icons";
@@ -8,15 +8,17 @@ import { twMerge } from "tailwind-merge";
 import classNames from "classnames";
 import useTodosContext from "../hooks/useTodosContext";
 import DialogModal from "./DialogModal";
+import useProjectContext from "../hooks/useProjectContext";
 
 type Props = {
-  todo: TodoTasksList;
+  todo: Task;
   //   onDelete: (id: string) => void;
   //   onEdit: (id: string, todo: TodoTasksList) => void;
 };
 
 const TodoTask = (props: Props) => {
   const todosContext = useTodosContext();
+  // const projectContext = useProjectContext();
   const [isDone, setIsDone] = useState(props.todo.isDone);
 
   const handleDeleteClick = (event: React.MouseEvent) => {
@@ -30,9 +32,13 @@ const TodoTask = (props: Props) => {
     setIsDone(!isDone);
     props.todo.isDone = !props.todo.isDone;
     // props.onEdit(props.todo.id, props.todo);
-    todosContext.editTodoById(props.todo.id, props.todo);
+    todosContext.editTaskById(props.todo.id, props.todo);
     console.log(`this task is checked: ${props.todo.isDone}`)
   };
+
+  const handleInboxTask = (id: string, todo: Task)=>{
+    todosContext.editTaskById(id, todo);
+  }
     
   const markTitle = twMerge(
     classNames(
@@ -52,7 +58,7 @@ const TodoTask = (props: Props) => {
             <div className=" flex items-center truncate">
               <Checkbox.Root
                 className="flex-shrink-0 text-[#5b5271] hover:bg-red flex h-5 w-5 items-center justify-center rounded-[4px] bg-white"
-                id={props.todo.id.toString()}
+                id={props.todo.id}
                 checked={isDone}
                 onClick={handleChecked}
               >
@@ -70,7 +76,7 @@ const TodoTask = (props: Props) => {
           </form>
         </DialogModal.Button>
         <DialogModal.Content title={props.todo.title}>
-          <TodoEdit todo={props.todo} />
+          <TodoEdit todo={props.todo} editTaskById={handleInboxTask}/>
         </DialogModal.Content>
       </DialogModal>
     </div>
