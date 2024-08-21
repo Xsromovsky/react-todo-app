@@ -10,6 +10,11 @@ import {
 import DialogModal from "./DialogModal";
 import TodoEdit from "./TodoEdit";
 import useProjectContext from "../hooks/useProjectContext";
+import { twMerge } from "tailwind-merge";
+import classNames from "classnames";
+
+
+
 
 type Props = {
   task: Task;
@@ -28,6 +33,15 @@ const ProjectTasks = (props: Props) => {
         
     // },[])
 
+    const markTask = twMerge(
+        classNames(
+            "hover:bg-[#484564] flex items-center justify-between w-[350px] rounded-lg",
+            {
+                "bg-red-600 hover:bg-red-700": isDone,
+            }
+        )
+    )
+
     const handleChecked = (event: React.MouseEvent) => {
         setIsDone(!isDone);
         props.task.isDone = !props.task.isDone;
@@ -40,7 +54,7 @@ const ProjectTasks = (props: Props) => {
   return (
     <div
       key={props.index}
-      className="hover:bg-[#484564]  flex items-center justify-between w-[350px]"
+      className={markTask}
     >
         
       <div className="flex items-center m-1  max-w-full truncate">

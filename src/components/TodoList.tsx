@@ -17,8 +17,6 @@ const TodoList = (props: Props) => {
     const renderedTasks = todosContext.todos.filter(todo => props.isDone === undefined || todo.isDone === props.isDone)
     .map(todo => <TodoTask key={todo.id} todo={todo}/>)
 
-    
-
 //   const renderedTasks = todosContext.todos.map((todo) => {
 //     return <TodoTask todo={todo} key={todo.id} />;
 //   });
