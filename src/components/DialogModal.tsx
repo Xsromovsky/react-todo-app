@@ -21,15 +21,33 @@ type ContentProps = {
   children: React.ReactNode;
   contentClassname?: string;
   overlayClassname?: string;
+  dialogTitle?: string;
+  buttonTitle?: boolean;
+  childrenTitle?: React.ReactNode;
 };
 
 function ModalContent(props: ContentProps) {
+  const renderTitle = (children: React.ReactNode) => {
+    if (props.buttonTitle) {
+      return (
+        <div className="flex">
+          <Dialog.Title className={props.dialogTitle}>
+            {props.title}
+          </Dialog.Title>
+         {children}
+        </div>
+      );
+    }else{
+      return (<Dialog.Title className={props.dialogTitle}>{props.title}</Dialog.Title>)
+    }
+  };
+
   return (
     <Dialog.Portal>
       <Dialog.Overlay className={props.overlayClassname}>
         <Dialog.Content className={props.contentClassname}>
           <div className="m-4">
-            <Dialog.Title className="">{props.title}</Dialog.Title>
+            {renderTitle(props.childrenTitle)}
             <Dialog.Description>{props.description}</Dialog.Description>
 
             {props.children}
@@ -41,4 +59,5 @@ function ModalContent(props: ContentProps) {
 }
 DialogModal.Button = Dialog.Trigger;
 DialogModal.Content = ModalContent;
+DialogModal.Close = Dialog.Close;
 export default DialogModal;

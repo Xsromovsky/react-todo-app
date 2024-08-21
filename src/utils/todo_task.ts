@@ -10,10 +10,6 @@ export type Task = {
     
 }
 
-export type TaskFlag = {
-    taskFlag: string
-}
-
 export type ProjectType = {
     id: string,
     label: string,

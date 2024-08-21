@@ -8,7 +8,7 @@ import { twMerge } from "tailwind-merge";
 import classNames from "classnames";
 import useTodosContext from "../hooks/useTodosContext";
 import DialogModal from "./DialogModal";
-import useProjectContext from "../hooks/useProjectContext";
+// import useProjectContext from "../hooks/useProjectContext";
 
 type Props = {
   todo: Task;

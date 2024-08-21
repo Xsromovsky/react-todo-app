@@ -36,6 +36,7 @@ const TodoEdit = (props: Props) => {
       //   props.onEdit(props.todo.id, props.todo);
       // todosContext.editTaskById(props.todo.id, props.todo);
       props.editTaskById(props.todo.id, props.todo);
+      
     }
   };
   // const handleSubmit = (event: React.FormEvent) => {
@@ -44,7 +45,7 @@ const TodoEdit = (props: Props) => {
   // };
 
   return (
-    <form>
+    
       <DialogModal.Content
         title="Edit Task"
         contentClassname="relative bg-[#231c35] w-4/12 p-2 rounded-lg text-white"
@@ -75,7 +76,7 @@ const TodoEdit = (props: Props) => {
           </Dialog.Close>
         </div>
       </DialogModal.Content>
-    </form>
+    
   );
 };
 

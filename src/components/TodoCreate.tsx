@@ -3,12 +3,14 @@ import * as Dialog from "@radix-ui/react-dialog";
 import DialogModal from "./DialogModal";
 import TodosContext from "../contexts/TodoContext";
 
-type Props = {};
+type Props = {
+  handleCreateTodo: (title: string, description: string)=>void
+};
 
 const TodoCreate = (props: Props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const todosContext = useContext(TodosContext);
+  // const todosContext = useContext(TodosContext);
 
   const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -25,19 +27,16 @@ const TodoCreate = (props: Props) => {
   const handleSubmit = (event: React.FormEvent) => {
     // event.preventDefault();
     // props.onCreate(title, description);
-    todosContext.createTodo(title, description);
+    // todosContext.createTodo(title, description);
+    props.handleCreateTodo(title, description);
     setDescription("");
     setTitle("");
   };
 
 
   return (
-    <div className="bg-[#2a2b47] flex flex-col items-center p-4 text-white">
-      <h2 className="text-3xl mb-4">My personal Todo app</h2>
-      <DialogModal>
-        <DialogModal.Button asChild>
-          <span className="p-2 rounded-full bg-[#484564] hover:bg-[#5b5271]">Create Task</span>
-        </DialogModal.Button>
+    
+        
         <DialogModal.Content
           title="Create new Task"
           description="Add a new task here"
@@ -77,8 +76,7 @@ const TodoCreate = (props: Props) => {
             </Dialog.Close>
           </div>
         </DialogModal.Content>
-      </DialogModal>
-    </div>
+      
   );
 };
 

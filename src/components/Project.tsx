@@ -1,54 +1,65 @@
-import React from "react";
+import React, { useState } from "react";
 import * as ScrollArea from "@radix-ui/react-scroll-area";
-import * as Checkbox from "@radix-ui/react-checkbox";
-import {
-  CheckIcon,
-  Pencil1Icon,
-  PlusIcon,
-  SizeIcon,
-  TrashIcon,
-} from "@radix-ui/react-icons";
-import { ProjectType } from "../utils/todo_task";
-
+import { PlusIcon, SizeIcon } from "@radix-ui/react-icons";
+import { ProjectType, Task } from "../utils/todo_task";
+import DialogModal from "./DialogModal";
+import useProjectContext from "../hooks/useProjectContext";
+import TodoCreate from "./TodoCreate";
+import ProjectDetails from "./ProjectDetails";
+import ProjectTasks from "./ProjectTasks";
 
 type Props = {
-    project: ProjectType
+  project: ProjectType;
 };
 
 const Project = (props: Props) => {
+  const projectContext = useProjectContext();
 
+  const handleProjectTaskEdit = (id: string, task: Task) => {
+    projectContext.updateTaskById(task);
+  };
+  const handleProjectTaskCreate = (title: string, description: string) => {
+    projectContext.newTask(title, description, props.project.id);
+  };
+
+  const renderProjectTasks = props.project.tasks.map((task, index) => {
+    return (
+      <ProjectTasks
+        handleProjectTaskCreate={handleProjectTaskCreate}
+        handleProjectTaskEdit={handleProjectTaskEdit}
+        index={index}
+        key={task.id}
+        task={task}
+      />
+    );
+  });
 
   return (
     <div className="relative bg-[#2a2b47] w-[350px] h-[400px] rounded-lg text-white">
-      <ScrollArea.Root className="h-full">
+      <ScrollArea.Root className="h-full ">
         <ScrollArea.Viewport className="h-full">
-          <div className="sticky top-0 bg-[#242039] flex rounded-t-lg justify-center font-bold text-lg py-2">
+          <div className="sticky top-0 bg-[#242039] flex rounded-t-lg justify-center font-bold text-lg py-2 ">
             <label> {props.project.label} </label>
-            <PlusIcon className="absolute top-1 right-1 size-[25px] cursor-pointer hover:bg-[#484564] rounded-full"/>
-            <SizeIcon className="absolute left-1 top-1 size-[25px] cursor-pointer hover:bg-[#484564] rounded-full"/>
+            <DialogModal>
+              <DialogModal.Button>
+                <PlusIcon className="absolute top-1 right-1 size-[30px] cursor-pointer hover:bg-[#484564] rounded-full" />
+              </DialogModal.Button>
+              <DialogModal.Content title="Create a new task">
+                <TodoCreate handleCreateTodo={handleProjectTaskCreate} />
+              </DialogModal.Content>
+            </DialogModal>
+            <DialogModal>
+              <DialogModal.Button>
+                <SizeIcon className="absolute left-1 top-1 size-[30px] cursor-pointer hover:bg-[#484564] rounded-full" />
+              </DialogModal.Button>
+
+              <ProjectDetails
+                project={props.project}
+                key={props.project.id}
+              ></ProjectDetails>
+            </DialogModal>
           </div>
-          {props.project.tasks.map((task, index) => (
-            <div
-              key={index}
-              className="hover:bg-[#484564] m-1 flex items-center justify-between "
-            >
-              <div className="flex items-center m-1 ">
-                <Checkbox.Root
-                  className="flex-shrink-0 text-[#5b5271] hover:bg-red flex h-5 w-5 
-                 justify-center rounded-[4px] bg-white items-center"
-                >
-                  <Checkbox.Indicator>
-                    <CheckIcon />
-                  </Checkbox.Indicator>
-                </Checkbox.Root>
-                <p className="flex items-center m-0 px-2 ">{task.title}</p>
-              </div>
-              <div className="flex space-x-2">
-                <Pencil1Icon className="cursor-pointer" />
-                <TrashIcon className="cursor-pointer" />
-              </div>
-            </div>
-          ))}
+          {renderProjectTasks}
         </ScrollArea.Viewport>
         <ScrollArea.Scrollbar className="" orientation="vertical">
           <ScrollArea.Thumb className="" />
