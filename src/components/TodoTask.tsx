@@ -33,7 +33,7 @@ const TodoTask = (props: Props) => {
     props.todo.isDone = !props.todo.isDone;
     // props.onEdit(props.todo.id, props.todo);
     todosContext.editTaskById(props.todo.id, props.todo);
-    console.log(`this task is checked: ${props.todo.isDone}`)
+    // console.log(`this task is checked: ${props.todo.isDone}`)
   };
 
   const handleInboxTask = (id: string, todo: Task)=>{

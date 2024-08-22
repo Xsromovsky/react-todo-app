@@ -6,6 +6,7 @@ import { log } from "console";
 export type ProjectApi = {
   newProject: (label: string) => Promise<void>;
   deleteProject: (id: string) => Promise<void>;
+  updateProject: (id: string, label: string) => Promise<void>;
   getAllProjects: () => Promise<void>;
   projects: ProjectType[];
 
@@ -69,6 +70,30 @@ function ProjectProvider(props: ProjectProviderProps) {
     }
   };
 
+  const updateProject = async(id: string, label: string)=>{
+    try{
+        const response = await axios.put(`/project/${id}`,{
+            label,
+        });
+        if(response.status === 200) {
+            const updatedProject = projects.map(project => {
+                if(project.id === id) {
+                    return {
+                        ...project,
+                        ...response.data
+                    }
+                }
+                return project;
+            })
+            setProjects(updatedProject);
+        }
+
+    }catch (err) {
+        console.log(err);
+        
+    }
+  }
+
   // Project tasks
 
   const newTask = async (
@@ -108,7 +133,7 @@ function ProjectProvider(props: ProjectProviderProps) {
    updatedTask: Task
   ) => {
     try{
-        const response = await axios.put("/project/task", updatedTask)
+        const response = await axios.put("/project/task/update", updatedTask)
         if(response.status === 200) {
             const updatedTaskResponse = response.data;
             setProjects((prevProjects) => {
@@ -166,6 +191,7 @@ function ProjectProvider(props: ProjectProviderProps) {
     getAllProjects,
     newProject,
     deleteProject,
+    updateProject,
     newTask,
     updateTaskById,
     deleteTaskById

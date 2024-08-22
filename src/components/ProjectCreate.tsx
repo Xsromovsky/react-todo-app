@@ -3,24 +3,27 @@ import useProjectContext from "../hooks/useProjectContext";
 import DialogModal from "./DialogModal";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Cross1Icon } from "@radix-ui/react-icons";
-type Props = {};
+type Props = {
+  onCreate: (label:string) => void
+  title: string
+  description?: string
+};
 
 const ProjectCreate = (props: Props) => {
   const [label, setLabel] = useState("");
-  const projectContext = useProjectContext();
 
   const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLabel(event.target.value);
   };
 
   const handleCreate = () => {
-    projectContext.newProject(label);
+    props.onCreate(label)
   };
 
   return (
     <DialogModal.Content
-      title="New Project"
-      description="add project label"
+      title={props.title}
+      description={props.description}
       contentClassname="relative bg-[#231c35] w-4/12 p-2 rounded-lg text-white"
       overlayClassname="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center text-white"
     >

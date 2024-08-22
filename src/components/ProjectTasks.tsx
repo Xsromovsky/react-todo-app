@@ -12,6 +12,7 @@ import TodoEdit from "./TodoEdit";
 import useProjectContext from "../hooks/useProjectContext";
 import { twMerge } from "tailwind-merge";
 import classNames from "classnames";
+import DeleteComponent from "./DeleteComponent";
 
 
 
@@ -37,11 +38,13 @@ const ProjectTasks = (props: Props) => {
         classNames(
             "hover:bg-[#484564] flex items-center justify-between w-[350px] rounded-lg",
             {
-                "bg-red-600 hover:bg-red-700": isDone,
+                "bg-red-600 hover:bg-red-700": props.task.isDone,
             }
         )
     )
-
+    const handleDeleteTask = ()=>{
+        projectContext.deleteTaskById(props.task.id, props.task.projectId!)
+    }
     const handleChecked = (event: React.MouseEvent) => {
         setIsDone(!isDone);
         props.task.isDone = !props.task.isDone;
@@ -61,7 +64,7 @@ const ProjectTasks = (props: Props) => {
         <Checkbox.Root
           className="flex-shrink-0 text-[#5b5271] flex h-5 w-5 
                  justify-center rounded-[4px] bg-white items-center"
-          checked={isDone}
+          checked={props.task.isDone}
           onClick={handleChecked}
         >
           <Checkbox.Indicator>
@@ -90,29 +93,7 @@ const ProjectTasks = (props: Props) => {
           <DialogModal.Button>
             <TrashIcon className="cursor-pointer size-[20px]" />
           </DialogModal.Button>
-          <DialogModal.Content
-            title={`Delete task: ${props.task.title}`}
-            contentClassname="relative bg-[#231c35]  w-4/12 p-2 rounded-lg text-white"
-            overlayClassname="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center text-white"
-            dialogTitle="truncate"
-          >
-            <DialogModal.Close className="absolute top-1 right-1  hover:bg-[#484564] rounded-full p-1">
-              <Cross1Icon className="size-[25px] " />
-            </DialogModal.Close>
-            <div className="flex flex-col">
-              <p>Do you want delete a task?</p>
-              <div className="flex justify-end">
-                <DialogModal.Close
-                  className="bg-red-500 p-2 rounded-lg hover:bg-red-600 font-bold"
-                  onClick={() => {
-                    projectContext.deleteTaskById(props.task.id, props.task.projectId!);
-                  }}
-                >
-                  Delete
-                </DialogModal.Close>
-              </div>
-            </div>
-          </DialogModal.Content>
+         <DeleteComponent  delete={handleDeleteTask} title={`Delete task: ${props.task.title}`} description="Do you want delete a task?"/>
         </DialogModal>
       </div>
     </div>

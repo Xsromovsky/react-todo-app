@@ -12,6 +12,10 @@ type Props = {}
 
 const ProjectPage = (props: Props) => {
   const projectContext = useProjectContext()
+
+  const handleCreate = (label:string) => {
+    projectContext.newProject(label);
+  };
   
   useEffect(()=>{
     projectContext.getAllProjects();
@@ -27,7 +31,7 @@ const ProjectPage = (props: Props) => {
                   new project
                 </DialogModal.Button>
                 <DialogModal.Content title='New Project'>
-                  <ProjectCreate/>
+                  <ProjectCreate onCreate={handleCreate} title='New Project'/>
                 </DialogModal.Content>
               </DialogModal>
             </HeaderComponent>
