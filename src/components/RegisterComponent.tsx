@@ -4,13 +4,16 @@ import { Dialog } from "@radix-ui/themes";
 import FormComponent from "./FormComponent";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import useAuthContext from "../hooks/useAuthContext";
+import { useNavigate } from "react-router-dom";
 
 type Props = {};
 
 const RegisterComponent = (props: Props) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isSignUp, setIsSignUp] = useState(false);
   const authContext = useAuthContext();
+  const navigate = useNavigate();
 
   const handleChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
@@ -24,7 +27,9 @@ const RegisterComponent = (props: Props) => {
     console.log(confirmPassword);
   };
 
-  const passwordMatchHandler = (event: React.FormEvent<HTMLFormElement>) => {
+  const passwordMatchHandler = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
     event.preventDefault();
     if (password !== confirmPassword) {
       alert("Password mismatch");
@@ -34,8 +39,51 @@ const RegisterComponent = (props: Props) => {
       const form = new FormData(event.currentTarget);
       const email = form.get("email") as string;
       const username = form.get("username") as string;
-      authContext.signup(username, password, email);
-      console.log("register user");
+      const isSuccess = await authContext.signup(username, password, email);
+      console.log(isSuccess);
+
+      if (isSuccess) {
+        setIsSignUp(true);
+      }
+    }
+  };
+
+  const returnToLogin = () => {
+    navigate("/")
+  }
+
+  const notifyUser = () => {
+    if (isSignUp) {
+      return (
+        <DialogModal.Content
+          title="Registration success"
+          overlayClassname="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center text-white"
+          contentClassname="relative bg-[#231c35]  w-[450px] h-[200px] p-2 rounded-lg text-white"
+        >
+         <div className="">
+            <p>Your account has been created successfully.</p>
+            <p>We have sent you a confirmation email. Please confirm your email address</p>
+            <DialogModal.Close className="absolute right-2 bottom-2 m-2 bg-[#2a2b47] p-2 rounded-lg hover:bg-[#484564]" onClick={returnToLogin}>
+              close
+            </DialogModal.Close>
+          </div> 
+        </DialogModal.Content>
+      );
+    } else {
+      return (
+        <DialogModal.Content
+          title="Registration error"
+          overlayClassname="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center text-white"
+          contentClassname="relative bg-[#231c35]  w-[450px] h-[200px] p-2 rounded-lg text-white"
+        >
+          <div className="">
+            <p>Error with registering</p>
+            <DialogModal.Close className="absolute right-2 bottom-2 m-2 bg-[#2a2b47] p-2 rounded-lg hover:bg-[#484564]"onClick={returnToLogin} >
+              close
+            </DialogModal.Close>
+          </div>
+        </DialogModal.Content>
+      );
     }
   };
 
@@ -123,11 +171,17 @@ const RegisterComponent = (props: Props) => {
                   controlClassname="p-2 rounded bg-[#2a2b47] focus:outline-none focus:border-[#6e5774] focus:ring-[#6e5774] focus:ring-2"
                 />
               </FormComponent.Field>
-              <Dialog.Close>
-                <FormComponent.Submit className="mt-4 p-1 w-full py-2 font-bold rounded-lg bg-[#2a2b47] hover:bg-[#484564]">
-                  <span className="">Sign up</span>
-                </FormComponent.Submit>
-              </Dialog.Close>
+              <DialogModal>
+                <DialogModal.Button>
+                  <Dialog.Close>
+                    <FormComponent.Submit className="mt-4 p-1 w-full py-2 font-bold rounded-lg bg-[#2a2b47] hover:bg-[#484564]">
+                      <span className="">Sign up</span>
+                    </FormComponent.Submit>
+                  </Dialog.Close>
+                </DialogModal.Button>
+                {notifyUser()}
+              </DialogModal>
+              
             </div>
           </FormComponent>
         </DialogModal.Content>

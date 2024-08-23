@@ -3,10 +3,11 @@ import useProjectContext from "../hooks/useProjectContext";
 import DialogModal from "./DialogModal";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Cross1Icon } from "@radix-ui/react-icons";
+import FormComponent from "./FormComponent";
 type Props = {
-  onCreate: (label:string) => void
-  title: string
-  description?: string
+  onCreate: (label: string) => void;
+  title: string;
+  description?: string;
 };
 
 const ProjectCreate = (props: Props) => {
@@ -16,8 +17,10 @@ const ProjectCreate = (props: Props) => {
     setLabel(event.target.value);
   };
 
-  const handleCreate = () => {
-    props.onCreate(label)
+  const handleCreate = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    props.onCreate(label);
+    setLabel("");
   };
 
   return (
@@ -27,20 +30,34 @@ const ProjectCreate = (props: Props) => {
       contentClassname="relative bg-[#231c35] w-4/12 p-2 rounded-lg text-white"
       overlayClassname="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center text-white"
     >
-      <fieldset>
-        <input
-          type="text"
-          placeholder="Project name"
-          onChange={handleChangeInput}
-          className="rounded-lg p-1 w-full bg-[#242039] border-1 focus:outline-none focus:border-[#6e5774]"
-          required
-        />
-      </fieldset>
-      <div className="flex justify-end">
-        <Dialog.Close onClick={handleCreate} className="bg-[#242039] p-2 rounded-full m-2 hover:bg-[#2a2b47] font-bold text-lg">
-          Create
-        </Dialog.Close>
-      </div>
+      <FormComponent handler={handleCreate} className="w-full">
+        <FormComponent.Field
+          name="Label"
+          labelName="Project label"
+          useLabel
+          useMessage
+          messageName="Enter Project name"
+          labelMessageClassname="flex justify-between px-1"
+        >
+          <FormComponent.Control
+            placeholder="Project name"
+            type="text"
+            isRequired
+            value={label}
+            onChange={handleChangeInput}
+            controlClassname="w-full p-1 rounded-lg bg-[#2a2b47] focus:outline-none focus:border-[#6e5774] focus:ring-[#6e5774] focus:ring-2"
+          />
+        </FormComponent.Field>
+        <div className="flex justify-end mt-3">
+            
+          <FormComponent.Submit>
+              <span className="bg-[#2a2b47] hover:bg-[#484564] p-2 rounded-lg ">
+                Create
+              </span>
+          </FormComponent.Submit>
+            
+        </div>
+      </FormComponent>
 
       <Dialog.Close className="absolute top-1 right-1  hover:bg-[#484564] rounded-full p-1">
         <Cross1Icon className="size-[25px] " />

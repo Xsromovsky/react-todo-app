@@ -14,8 +14,9 @@ const FormComponent = (props: Props) => {
 type FormControlInputProps = {
   placeholder?: string;
   controlClassname?: string;
-  isRequired: boolean;
+  isRequired?: boolean;
   type: string;
+  value?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -28,6 +29,7 @@ function FormControlInput(props: FormControlInputProps) {
         required={props.isRequired}
         type={props.type}
         onChange={props.onChange}
+        value={props.value}
       />
     </Form.Control>
   );

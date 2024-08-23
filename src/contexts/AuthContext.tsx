@@ -11,7 +11,7 @@ type UserData = {
 
 type Auth = {
   login: (email: string, password: string) => Promise<void>;
-  signup: (username: string, password: string, email: string) => Promise<void>;
+  signup: (username: string, password: string, email: string) => Promise<boolean>;
   logout: () => Promise<void>;
   fetchProfileData: () => Promise<void>;
   accessToken: string | null;
@@ -66,10 +66,10 @@ function AuthProvider(props: AuthProviderProps) {
     }
   };
 
-  const signup = async (username: string, password: string, email: string) => {
-    console.log(
-      `username: ${username}, password: ${password}, email: ${email}`
-    );
+  const signup = async (username: string, password: string, email: string): Promise<boolean> => {
+    // console.log(
+    //   `username: ${username}, password: ${password}, email: ${email}`
+    // );
     try {
       const response = await axios.post("/user/signup", {
         username,
@@ -78,11 +78,14 @@ function AuthProvider(props: AuthProviderProps) {
       });
       if (response.status === 201) {
         console.log("register successful");
-        alert("success");
+        return true;
+        
       }
       console.log(response.data);
+      return false;
     } catch (error) {
       console.log("registering failed: ", error);
+      return false;
     }
   };
 

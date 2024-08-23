@@ -2,9 +2,11 @@ import React, { useContext, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import DialogModal from "./DialogModal";
 import TodosContext from "../contexts/TodoContext";
+import FormComponent from "./FormComponent";
+import { Cross1Icon } from "@radix-ui/react-icons";
 
 type Props = {
-  handleCreateTodo: (title: string, description: string)=>void
+  handleCreateTodo: (title: string, description: string) => void;
 };
 
 const TodoCreate = (props: Props) => {
@@ -15,17 +17,13 @@ const TodoCreate = (props: Props) => {
   const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
     console.log(title);
-    
   };
-  const handleChangeTextArea = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
+  const handleChangeTextArea = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDescription(event.target.value);
     console.log(description);
-    
   };
   const handleSubmit = (event: React.FormEvent) => {
-    // event.preventDefault();
+    event.preventDefault();
     // props.onCreate(title, description);
     // todosContext.createTodo(title, description);
     props.handleCreateTodo(title, description);
@@ -33,50 +31,61 @@ const TodoCreate = (props: Props) => {
     setTitle("");
   };
 
-
   return (
-    
-        
-        <DialogModal.Content
-          title="Create new Task"
-          description="Add a new task here"
-          contentClassname="relative bg-[#231c35]  w-4/12 p-2 rounded-lg text-white"
-          overlayClassname="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center text-white"
-        >
-          <fieldset>
-            <input
-              type="text"
-              placeholder="Task name"
-              className="rounded-lg p-1 w-full bg-[#242039] border-1 focus:outline-none focus:border-[#6e5774]"
-              onChange={handleChangeInput}
-            />
-          </fieldset>
-          <fieldset>
-            <textarea
-              name="description"
-              placeholder="Task description"
-              className="bg-[#242039] rounded-lg text-white mt-2 w-full active:outline-none p-1"
-              onChange={handleChangeTextArea}
-            ></textarea>
-          </fieldset>
-          <div className=" flex justify-end space-x-2">
-            <Dialog.Close>
-              <button className="hover:bg-[#2a2b47] p-2  rounded-full">
-                Cancel
-              </button>
-            </Dialog.Close>
-            <Dialog.Close>
-              <button
-                className="bg-[#242039] p-2 rounded-full m-2 hover:bg-[#2a2b47]"
-                type="submit"
-                onClick={handleSubmit}
-              >
-                Save
-              </button>
-            </Dialog.Close>
-          </div>
-        </DialogModal.Content>
+    <DialogModal.Content
+      title="Create new Task"
+      contentClassname="relative bg-[#231c35]  w-4/12 p-2 rounded-lg text-white"
+      overlayClassname="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center text-white"
+    >
       
+      <FormComponent handler={handleSubmit} className="w-full">
+        <FormComponent.Field
+          name="title"
+          useLabel
+          labelName="title"
+          labelMessageClassname="flex justify-between px-2 font-bold text-lg"
+          useMessage
+          messageName="Enter task title"
+          
+
+        >
+          <FormComponent.Control
+            value={title}
+            onChange={handleChangeInput}
+            isRequired
+
+            type="text"
+            placeholder="Enter title"
+            controlClassname="w-full p-1 rounded-lg bg-[#2a2b47] focus:outline-none focus:border-[#6e5774] focus:ring-[#6e5774] focus:ring-2"
+          />
+        </FormComponent.Field>
+        <FormComponent.Field
+          name="description"
+          useLabel
+          labelName="description"
+          labelMessageClassname="px-2 font-bold text-lg"
+        >
+          <FormComponent.Control
+            value={description}
+            onChange={handleChangeTextArea}
+            type="text"
+            placeholder="Enter description"
+            controlClassname="w-full p-1 rounded-lg bg-[#2a2b47] focus:outline-none focus:border-[#6e5774] focus:ring-[#6e5774] focus:ring-2"
+          />
+        </FormComponent.Field>
+        <div className="flex space-x-3 justify-end items-center mt-2">
+        <DialogModal.Close className="flex items-center p-2 hover:bg-[#484564] rounded-lg">
+          Close
+        </DialogModal.Close>
+
+        <FormComponent.Submit className=" flex justify-end ">
+            <span className="bg-[#2a2b47]  hover:bg-[#484564] p-2 rounded-lg ">
+              Create
+            </span>
+        </FormComponent.Submit>
+        </div>
+      </FormComponent>
+    </DialogModal.Content>
   );
 };
 
