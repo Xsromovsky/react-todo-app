@@ -1,8 +1,9 @@
 import React from "react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import FormComponent from "../components/FormComponent";
 import RegisterComponent from "../components/RegisterComponent";
 import useAuthContext from "../hooks/useAuthContext";
+import { Toaster } from "react-hot-toast";
 
 type Props = {};
 
@@ -15,18 +16,20 @@ const LoginPage = (props: Props) => {
     const form = new FormData(event.currentTarget);
     const email = form.get("email") as string;
     const password = form.get("password") as string;
+    authContext.login(email, password);
 
-    try {
-      authContext.login(email, password);
-    } catch (error) {
-      console.error("There was a problem with the login request:", error);
-      alert("An error occurred. Please try again.");
-    }
-    console.log("login user");
+    // try {
+    //   authContext.login(email, password);
+    // } catch (error) {
+    //   console.error("There was a problem with the login request:", error);
+    //   alert("An error occurred. Please try again.");
+    // }
+    // console.log("login user");
   };
-  
+
   return (
     <>
+      <Toaster />
       <div className="flex justify-end">
         <div className="w-[50%] bg-[#2a2b47] h-screen flex justify-center items-center">
           <div className=" bg-[#231c35] h-[400px] w-[400px] text-white rounded-lg">

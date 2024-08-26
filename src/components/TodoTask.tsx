@@ -53,7 +53,7 @@ const TodoTask = (props: Props) => {
   return (
     <div className="">
       <DialogModal>
-        <DialogModal.Button>
+        <DialogModal.Button asChild>
           <form className={markTitle}>
             <div className=" flex items-center truncate">
               <Checkbox.Root

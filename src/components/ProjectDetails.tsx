@@ -2,17 +2,11 @@ import React, { useState } from "react";
 import DialogModal from "./DialogModal";
 import { ProjectType, Task } from "../utils/todo_task";
 import {
-  ChevronUpIcon,
   Cross1Icon,
   PaperPlaneIcon,
   Pencil1Icon,
 } from "@radix-ui/react-icons";
-import * as Accordion from "@radix-ui/react-accordion";
-import { ChevronDownIcon } from "@radix-ui/themes";
-import TodoEdit from "./TodoEdit";
 import useProjectContext from "../hooks/useProjectContext";
-import { twMerge } from "tailwind-merge";
-import classNames from "classnames";
 import ProjectDetailTask from "./ProjectDetailTask";
 import DeleteComponent from "./DeleteComponent";
 import ProjectCreate from "./ProjectCreate";

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import useProjectContext from "../hooks/useProjectContext";
 import DialogModal from "./DialogModal";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Cross1Icon } from "@radix-ui/react-icons";

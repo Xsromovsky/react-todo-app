@@ -1,9 +1,7 @@
 import React, { useContext, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import DialogModal from "./DialogModal";
-import TodosContext from "../contexts/TodoContext";
 import FormComponent from "./FormComponent";
-import { Cross1Icon } from "@radix-ui/react-icons";
 
 type Props = {
   handleCreateTodo: (title: string, description: string) => void;

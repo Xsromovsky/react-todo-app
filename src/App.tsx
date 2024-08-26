@@ -15,6 +15,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import ProjectPage from "./pages/ProjectPage";
 import { ProjectProvider } from "./contexts/ProjectContext";
 
+
+
 function App() {
   // const [todos, setTodos] = useState<TodoTasksList[]>([]);
 

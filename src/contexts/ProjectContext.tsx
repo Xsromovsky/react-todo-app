@@ -1,7 +1,6 @@
 import { createContext, ReactNode, useState } from "react";
 import axios from "../instances/axiosInstance";
 import { ProjectType, Task } from "../utils/todo_task";
-import { log } from "console";
 
 export type ProjectApi = {
   newProject: (label: string) => Promise<void>;

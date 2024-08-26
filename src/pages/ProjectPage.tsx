@@ -4,24 +4,18 @@ import HeaderComponent from "../components/HeaderComponent";
 import ProjectList from "../components/ProjectList";
 import useProjectContext from "../hooks/useProjectContext";
 import DialogModal from "../components/DialogModal";
-import { Dialog } from "@radix-ui/themes";
-import TodoEdit from "../components/TodoEdit";
 import ProjectCreate from "../components/ProjectCreate";
 
 type Props = {};
 
 const ProjectPage = (props: Props) => {
   const projectContext = useProjectContext();
-  const [isOpen, setIsOpen] = useState(false);
 
   const handleCreate = (label: string) => {
     projectContext.newProject(label);
   };
 
-  const onOpenChange = () => {
-    setIsOpen(!isOpen)
-    // open= isOpen
-  };
+
 
   useEffect(() => {
     projectContext.getAllProjects();

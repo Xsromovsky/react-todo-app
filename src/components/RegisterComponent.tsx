@@ -5,6 +5,7 @@ import FormComponent from "./FormComponent";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import useAuthContext from "../hooks/useAuthContext";
 import { useNavigate } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
 type Props = {};
 
@@ -17,14 +18,14 @@ const RegisterComponent = (props: Props) => {
 
   const handleChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
-    console.log(password);
+    // console.log(password);
   };
 
   const handleChangeConfirmPassword = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setConfirmPassword(event.target.value);
-    console.log(confirmPassword);
+    // console.log(confirmPassword);
   };
 
   const passwordMatchHandler = async (
@@ -39,18 +40,18 @@ const RegisterComponent = (props: Props) => {
       const form = new FormData(event.currentTarget);
       const email = form.get("email") as string;
       const username = form.get("username") as string;
-      const isSuccess = await authContext.signup(username, password, email);
-      console.log(isSuccess);
-
-      if (isSuccess) {
-        setIsSignUp(true);
-      }
+      
+      // console.log(`This is theory: user:${username} - p:${password} - email:${email}`);
+      authContext.signup(email, password, username);
+      // console.log(isSuccess);
+      
+      
     }
   };
 
   const returnToLogin = () => {
-    navigate("/")
-  }
+    navigate("/");
+  };
 
   const notifyUser = () => {
     if (isSignUp) {
@@ -60,13 +61,19 @@ const RegisterComponent = (props: Props) => {
           overlayClassname="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center text-white"
           contentClassname="relative bg-[#231c35]  w-[450px] h-[200px] p-2 rounded-lg text-white"
         >
-         <div className="">
+          <div className="">
             <p>Your account has been created successfully.</p>
-            <p>We have sent you a confirmation email. Please confirm your email address</p>
-            <DialogModal.Close className="absolute right-2 bottom-2 m-2 bg-[#2a2b47] p-2 rounded-lg hover:bg-[#484564]" onClick={returnToLogin}>
+            <p>
+              We have sent you a confirmation email. Please confirm your email
+              address
+            </p>
+            <DialogModal.Close
+              className="absolute right-2 bottom-2 m-2 bg-[#2a2b47] p-2 rounded-lg hover:bg-[#484564]"
+              onClick={returnToLogin}
+            >
               close
             </DialogModal.Close>
-          </div> 
+          </div>
         </DialogModal.Content>
       );
     } else {
@@ -78,7 +85,10 @@ const RegisterComponent = (props: Props) => {
         >
           <div className="">
             <p>Error with registering</p>
-            <DialogModal.Close className="absolute right-2 bottom-2 m-2 bg-[#2a2b47] p-2 rounded-lg hover:bg-[#484564]"onClick={returnToLogin} >
+            <DialogModal.Close
+              className="absolute right-2 bottom-2 m-2 bg-[#2a2b47] p-2 rounded-lg hover:bg-[#484564]"
+              onClick={returnToLogin}
+            >
               close
             </DialogModal.Close>
           </div>
@@ -89,6 +99,7 @@ const RegisterComponent = (props: Props) => {
 
   return (
     <>
+    <Toaster/>
       <DialogModal>
         <DialogModal.Button asChild>
           <span>Sign up</span>
@@ -172,16 +183,15 @@ const RegisterComponent = (props: Props) => {
                 />
               </FormComponent.Field>
               <DialogModal>
-                <DialogModal.Button>
+                <DialogModal.Button asChild>
                   <Dialog.Close>
                     <FormComponent.Submit className="mt-4 p-1 w-full py-2 font-bold rounded-lg bg-[#2a2b47] hover:bg-[#484564]">
                       <span className="">Sign up</span>
                     </FormComponent.Submit>
                   </Dialog.Close>
                 </DialogModal.Button>
-                {notifyUser()}
+                
               </DialogModal>
-              
             </div>
           </FormComponent>
         </DialogModal.Content>

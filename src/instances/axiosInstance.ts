@@ -1,11 +1,13 @@
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 
 const instance = axios.create({
     baseURL: "http://localhost:3100",
     // withCredentials: true,
 
 })
+
+
 
 instance.interceptors.request.use(
     config => {
@@ -21,7 +23,13 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
     response => response,
     async error => {
+        // const navigate = useNavigate();
         const originalRequest = error.config;
+
+        if (originalRequest.url === "/user/login") {
+            return Promise.reject(error);
+        }
+
         if (error.response.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
             try {
@@ -37,10 +45,12 @@ instance.interceptors.response.use(
                 localStorage.removeItem('accessToken');
                 localStorage.removeItem('refreshToken');
                 window.location.href = '/';
+                // navigate('/')
             }
         }
         if(error.response.status === 403){
             window.location.href = '/';
+            // navigate('/')
         }
 
         

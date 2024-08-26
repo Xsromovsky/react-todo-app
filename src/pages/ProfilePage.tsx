@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import SideBar from "../components/SideBar";
-import tiborImage from "../images/hlava_tibor.png";
 import useAuthContext from "../hooks/useAuthContext";
 import HeaderComponent from "../components/HeaderComponent";
 import useProjectContext from "../hooks/useProjectContext";
@@ -10,7 +9,6 @@ import useTodosContext from "../hooks/useTodosContext";
 type Props = {};
 
 const ProfilePage = (props: Props) => {
-  const navigate = useNavigate();
   const authContext = useAuthContext();
   const projectContext = useProjectContext();
   const TodoContext = useTodosContext();
