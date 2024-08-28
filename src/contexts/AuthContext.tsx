@@ -2,7 +2,7 @@ import { createContext, ReactNode, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "../instances/axiosInstance";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 
 type UserData = {
@@ -15,10 +15,10 @@ type Auth = {
   login: (email: string, password: string) => void;
   signup: (username: string, password: string, email: string) => void;
   logout: () => void;
-  fetchProfileData: () => Promise<void>;
+  fetchProfileData: () => void;
   accessToken: string | null;
   isAuthenticated: boolean;
-  user: UserData;
+  user: UserData | undefined;
 };
 
 const AuthContext = createContext<Auth>({} as Auth);
@@ -33,10 +33,10 @@ function AuthProvider(props: AuthProviderProps) {
   );
   const [isAuthenticated, setAuthenticated] = useState(false);
 
-  const [user, setUser] = useState<UserData>({
-    name: "unknown",
-    email: "not defined",
-  });
+  // const [user, setUser] = useState<UserData>({
+  //   name: "unknown",
+  //   email: "not defined",
+  // });
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
@@ -90,9 +90,33 @@ function AuthProvider(props: AuthProviderProps) {
     return response.data;
   };
 
+  // const fetchProfileData = async () => {
+  //   try {
+  //     const response = await axios.get("/user/profile");
+  //     if (response.status === 200) {
+  //       setUser({ email: response.data.email, name: response.data.name });
+  //       navigate("/profile");
+  //     }
+  //   } catch (err) {
+  //     console.log("profile fetching error: ", err);
+  //   }
+  // };
+
+  const fetchProfileData = async ()=>{
+    const response = await axios.get('/user/profile');
+    return response.data;
+  }
+
   const logout = async () => {
     await axios.get("/user/logout");
   };
+
+  const {data: user, refetch} = useQuery<UserData>({
+    queryFn: fetchProfileData,
+    queryKey: ['profile'],
+    enabled: isAuthenticated,
+    
+  })
 
   const logoutMutation = useMutation({
     mutationFn: logout,
@@ -100,21 +124,11 @@ function AuthProvider(props: AuthProviderProps) {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
       setAuthenticated(false);
+      queryClient.clear()
       navigate("/");
     },
   });
 
-  const fetchProfileData = async () => {
-    try {
-      const response = await axios.get("/user/profile");
-      if (response.status === 200) {
-        setUser({ email: response.data.email, name: response.data.name });
-        navigate("/profile");
-      }
-    } catch (err) {
-      console.log("profile fetching error: ", err);
-    }
-  };
 
   const loginMutation = useMutation({
     mutationFn: login,
@@ -179,7 +193,7 @@ function AuthProvider(props: AuthProviderProps) {
       value={{
         login: (email, password) => loginMutation.mutate({ email, password }),
         logout: () => logoutMutation.mutate(),
-        fetchProfileData,
+        fetchProfileData: refetch,
         signup: (email, password, username) =>
           signupMutation.mutate({ email, password, username }),
         isAuthenticated,

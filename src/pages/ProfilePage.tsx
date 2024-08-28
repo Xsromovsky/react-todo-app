@@ -11,10 +11,10 @@ type Props = {};
 const ProfilePage = (props: Props) => {
   const authContext = useAuthContext();
   const projectContext = useProjectContext();
-  const TodoContext = useTodosContext();
+  // const TodoContext = useTodosContext();
 
   let projectTasks = projectContext.projects.length;
-  const totalActiveTasks =
+  
 
   // authContext.fetchProfileData();
 
@@ -29,7 +29,7 @@ const ProfilePage = (props: Props) => {
       <SideBar />
       <div className="w-full flex flex-col">
         <HeaderComponent title="Profile">
-          <h3>{authContext.user.name}</h3>
+          <h3>{authContext.user?.name}</h3>
         </HeaderComponent>
         <div className="text-white">
           <div className="bg-[#2a2b47] w-[15%] m-2 flex flex-col items-center justify-center">

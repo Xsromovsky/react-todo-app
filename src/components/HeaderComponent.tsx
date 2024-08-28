@@ -7,8 +7,8 @@ type Props = {
 };
 
 const HeaderComponent = (props: Props) => {
-  const authContext = useAuthContext();
-  const user = authContext.user;
+  // const authContext = useAuthContext();
+  // const user = authContext.user;
   return (
     <div className="flex flex-col bg-[#2a2b47] items-center text-white ">
       <div className="mt-3">
