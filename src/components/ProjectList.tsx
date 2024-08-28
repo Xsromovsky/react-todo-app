@@ -9,7 +9,7 @@ const ProjectList = (props: Props) => {
 
     const projectContext = useProjectContext();
 
-    const renderedProjects = projectContext.projects.map(project => <Project project={project} key={project.id}/>);
+    const renderedProjects = projectContext.projects?.map(project => <Project project={project} key={project.id}/>);
     console.log(projectContext.projects);
     
 

@@ -2,6 +2,7 @@ import { createContext, ReactNode, useState } from "react";
 import { Task } from "../utils/todo_task";
 import axios from "../instances/axiosInstance";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import useAuthContext from "../hooks/useAuthContext";
 
 export type Todos = {
   todos: Task[] | undefined;
@@ -20,6 +21,7 @@ type ProviderProps = {
 function Provider(props: ProviderProps) {
   // const [todos, setTodos] = useState<Task[]>([]);
   const queryClient = useQueryClient();
+  const authContext = useAuthContext();
 
   const fetchTodos = async () => {
     const response = await axios.get("/task/inbox/all");
@@ -30,6 +32,7 @@ function Provider(props: ProviderProps) {
   const { data: todos, refetch } = useQuery<Task[]>({
     queryKey: ["todos"],
     queryFn: fetchTodos,
+    enabled: authContext.isAuthenticated
   });
 
   const deletoTodoById = async (id: string) => {

@@ -13,7 +13,7 @@ const ProfilePage = (props: Props) => {
   const projectContext = useProjectContext();
   // const TodoContext = useTodosContext();
 
-  let projectTasks = projectContext.projects.length;
+  let projectTasks = projectContext.projects?.length;
   
 
   // authContext.fetchProfileData();
