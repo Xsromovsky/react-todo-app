@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { MdDelete } from "react-icons/md";
+
 import { Task } from "../utils/todo_task";
 import TodoEdit from "./TodoEdit";
 import * as Checkbox from "@radix-ui/react-checkbox";
-import { CheckIcon } from "@radix-ui/react-icons";
+import { CheckIcon, TrashIcon } from "@radix-ui/react-icons";
 import { twMerge } from "tailwind-merge";
 import classNames from "classnames";
 import useTodosContext from "../hooks/useTodosContext";
@@ -51,7 +51,7 @@ const TodoTask = (props: Props) => {
   );
 
   return (
-    <div className="">
+    <div className="" data-testid="simple-task">
       <DialogModal>
         <DialogModal.Button asChild>
           <form className={markTitle}>
@@ -70,7 +70,7 @@ const TodoTask = (props: Props) => {
             </div>
             <div className="items-center flex">
               <span onClick={handleDeleteClick} className="cursor-pointer">
-                <MdDelete />
+                <TrashIcon />
               </span>
             </div>
           </form>

@@ -102,21 +102,20 @@ function AuthProvider(props: AuthProviderProps) {
   //   }
   // };
 
-  const fetchProfileData = async ()=>{
-    const response = await axios.get('/user/profile');
+  const fetchProfileData = async () => {
+    const response = await axios.get("/user/profile");
     return response.data;
-  }
+  };
 
   const logout = async () => {
     await axios.get("/user/logout");
   };
 
-  const {data: user, refetch} = useQuery<UserData>({
+  const { data: user, refetch } = useQuery<UserData>({
     queryFn: fetchProfileData,
-    queryKey: ['profile'],
+    queryKey: ["profile"],
     enabled: isAuthenticated,
-    
-  })
+  });
 
   const logoutMutation = useMutation({
     mutationFn: logout,
@@ -124,11 +123,10 @@ function AuthProvider(props: AuthProviderProps) {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
       setAuthenticated(false);
-      queryClient.clear()
+      queryClient.clear();
       navigate("/");
     },
   });
-
 
   const loginMutation = useMutation({
     mutationFn: login,

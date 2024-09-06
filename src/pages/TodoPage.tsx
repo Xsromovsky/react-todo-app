@@ -5,7 +5,7 @@ import SideBar from "../components/SideBar";
 import TodosContext from "../contexts/TodoContext";
 import HeaderComponent from "../components/HeaderComponent";
 import DialogModal from "../components/DialogModal";
-import toast, { Toaster } from "react-hot-toast";
+// import toast, { Toaster } from "react-hot-toast";
 
 type Props = {};
 

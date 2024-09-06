@@ -1,5 +1,5 @@
 import React from 'react'
-import ProjectType from './Project'
+// import ProjectType from './Project'
 import useProjectContext from '../hooks/useProjectContext'
 import Project from './Project'
 

@@ -51,7 +51,7 @@ const TodoCreate = (props: Props) => {
             value={title}
             onChange={handleChangeInput}
             isRequired
-
+            
             type="text"
             placeholder="Enter title"
             controlClassname="w-full p-1 rounded-lg bg-[#2a2b47] focus:outline-none focus:border-[#6e5774] focus:ring-[#6e5774] focus:ring-2"
