@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { history } from "../utils/navigate";
 
 const instance = axios.create({
     baseURL: "http://localhost:3100",
@@ -44,12 +44,14 @@ instance.interceptors.response.use(
                 
                 localStorage.removeItem('accessToken');
                 localStorage.removeItem('refreshToken');
-                window.location.href = '/';
+                // window.location.href = '/';
                 // navigate('/')
+                history.push('/')
             }
         }
         if(error.response.status === 403){
-            window.location.href = '/';
+            // window.location.href = '/';
+            history.push('/')
             // navigate('/')
         }
 
