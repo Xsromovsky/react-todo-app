@@ -43,10 +43,8 @@ const ForgotPasswordPage = (props: Props) => {
                   controlClassname="p-2 w-full rounded bg-[#231c35] focus:outline-none focus:border-[#6e5774] focus:ring-[#6e5774] focus:ring-2"
                 />
               </FormComponent.Field>
-              <FormComponent.Submit className="">
-                <button className='p-1 w-full py-2 font-bold rounded-lg bg-red-500 hover:bg-red-400'>
-                  Submit
-                </button>
+              <FormComponent.Submit className="p-1 w-full py-2 font-bold rounded-lg bg-red-500 hover:bg-red-400">
+                Submit
               </FormComponent.Submit>
             </div>
           </FormComponent>
