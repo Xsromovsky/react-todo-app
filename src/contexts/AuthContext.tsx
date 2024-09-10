@@ -32,29 +32,8 @@ function AuthProvider(props: AuthProviderProps) {
     localStorage.getItem("accessToken")
   );
   const [isAuthenticated, setAuthenticated] = useState(false);
-
-  // const [user, setUser] = useState<UserData>({
-  //   name: "unknown",
-  //   email: "not defined",
-  // });
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-
-  // const login = async (email: string, password: string) => {
-  //   try {
-  //     console.log("trying to login");
-  //     const response = await axios.post("/user/login", { email, password });
-  //     if (response.status === 200) {
-  //       localStorage.setItem("accessToken", response.data.accessToken);
-  //       localStorage.setItem("refreshToken", response.data.refreshToken);
-  //       setAccessToken_(response.data.accessToken);
-  //       setAuthenticated(true);
-  //       navigate("/home");
-  //     }
-  //   } catch (error) {
-  //     console.log(`login failed ${error}`);
-  //   }
-  // };
 
   const login = async ({
     email,
@@ -90,18 +69,6 @@ function AuthProvider(props: AuthProviderProps) {
     return response.data;
   };
 
-  // const fetchProfileData = async () => {
-  //   try {
-  //     const response = await axios.get("/user/profile");
-  //     if (response.status === 200) {
-  //       setUser({ email: response.data.email, name: response.data.name });
-  //       navigate("/profile");
-  //     }
-  //   } catch (err) {
-  //     console.log("profile fetching error: ", err);
-  //   }
-  // };
-
   const fetchProfileData = async () => {
     const response = await axios.get("/user/profile");
     return response.data;
@@ -136,7 +103,11 @@ function AuthProvider(props: AuthProviderProps) {
       localStorage.setItem("refreshToken", data.refreshToken);
       setAccessToken_(data.accessToken);
       setAuthenticated(true);
-      queryClient.invalidateQueries({ queryKey: ["profile"] }); // Invalidate profile data
+      // console.log("################################################################");
+      // console.log("SUCCESS ");
+      
+      
+      queryClient.invalidateQueries({ queryKey: ["profile"] });
       navigate("/home");
       // toast('login success')
     },
@@ -162,29 +133,6 @@ function AuthProvider(props: AuthProviderProps) {
       }
     },
   });
-
-  // const signup = async (username: string, password: string, email: string): Promise<boolean> => {
-  //   // console.log(
-  //   //   `username: ${username}, password: ${password}, email: ${email}`
-  //   // );
-  //   try {
-  //     const response = await axios.post("/user/signup", {
-  //       username,
-  //       password,
-  //       email,
-  //     });
-  //     if (response.status === 201) {
-  //       console.log("register successful");
-  //       return true;
-
-  //     }
-  //     console.log(response.data);
-  //     return false;
-  //   } catch (error) {
-  //     console.log("registering failed: ", error);
-  //     return false;
-  //   }
-  // };
 
   return (
     <AuthContext.Provider

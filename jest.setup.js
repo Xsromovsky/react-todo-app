@@ -1,31 +1,21 @@
 import { server } from "./src/mocks/server";
 import ResizeObserver from "resize-observer-polyfill";
+// import { Headers, Request, Response } from "node-fetch";
 
 require("@testing-library/jest-dom");
+
 global.ResizeObserver = ResizeObserver;
 
-beforeAll(() => {
-  server.listen();
-  // server.listen({ onUnhandledRequest: 'error' });
-
-  //     server.events.on('request:start', ({ request, requestId }) => {
-  //         // eslint-disable-next-line no-console
-  //         // console.log('Outgoing request:', request.method, request.url);
-  //     });
-
-  //     server.events.on('response:mocked', ({ request, requestId, response }) => {
-  //         // eslint-disable-next-line no-console
-  //         // console.log(
-  //         //   '%s %s received %s %s',
-  //         //   request.method,
-  //         //   request.url,
-  //         //   response.status,
-  //         //   response.statusText
-  //         // );
-  //     });
-});
+beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
+
+// Object.defineProperty(window, 'Request', {
+//   writable: true,
+//   value: jest.fn(),
+//   configurable: true
+// })
+
 
 Object.defineProperty(window, "matchMedia", {
   writable: true,
@@ -33,8 +23,8 @@ Object.defineProperty(window, "matchMedia", {
     matches: false,
     media: query,
     onchange: null,
-    addListener: jest.fn(), // Deprecated
-    removeListener: jest.fn(), // Deprecated
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
     addEventListener: jest.fn(),
     removeEventListener: jest.fn(),
     dispatchEvent: jest.fn(),

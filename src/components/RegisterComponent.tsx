@@ -35,7 +35,6 @@ const RegisterComponent = (props: Props) => {
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors, isSubmitting },
   } = useForm<FormData>({
     resolver: zodResolver(signUpSchema),
@@ -50,7 +49,7 @@ const RegisterComponent = (props: Props) => {
       <Toaster />
       <DialogModal>
         <DialogModal.Button asChild>
-          <span>Sign up</span>
+          <button data-testid='register-dialogShow-btn'>Sign up</button>
         </DialogModal.Button>
         <DialogModal.Content
           title="Sign up"
@@ -58,7 +57,7 @@ const RegisterComponent = (props: Props) => {
           contentClassname="relative bg-[#231c35]  w-[450px] h-[500px] p-2 rounded-lg text-white"
         >
           <Dialog.Close>
-            <Cross1Icon className="absolute top-2 right-2 cursor-pointer size-[25px]" />
+            <Cross1Icon data-testid='register-cross-icon-btn' className="absolute top-2 right-2 cursor-pointer size-[25px]" />
           </Dialog.Close>
 
           <Form.Root className=" space-y-3" onSubmit={handleSubmit(onSubmit)}>
@@ -66,6 +65,7 @@ const RegisterComponent = (props: Props) => {
               <Form.Control asChild>
                 <input
                   {...register("username")}
+                  aria-label="register-username-input"
                   type="text"
                   name="username"
                   placeholder="Username"
@@ -80,6 +80,7 @@ const RegisterComponent = (props: Props) => {
               <Form.Control asChild>
                 <input
                   {...register("email")}
+                  aria-label="register-email-input"
                   type="email"
                   placeholder="example@mail.com"
                   className="w-full p-1 rounded-lg bg-[#2a2b47] focus:outline-none focus:border-[#6e5774] focus:ring-[#6e5774] focus:ring-2"
@@ -93,6 +94,7 @@ const RegisterComponent = (props: Props) => {
               <Form.Control asChild>
                 <input
                   {...register("password")}
+                  aria-label="register-password-input"
                   type="password"
                   name="password"
                   placeholder="password"
@@ -101,12 +103,14 @@ const RegisterComponent = (props: Props) => {
               </Form.Control>
             </Form.Field>
             <Form.Field name="confirmPassword">
+
               {errors.confirmPassword && (
                 <p className="text-red-500">{errors.confirmPassword.message}</p>
               )}
               <Form.Control asChild>
                 <input
                   {...register("confirmPassword")}
+                  aria-label="register-confirmPassword-input"
                   type="password"
                   name="confirmPassword"
                   placeholder="confirm password"
@@ -119,6 +123,7 @@ const RegisterComponent = (props: Props) => {
               <button
                 disabled={isSubmitting}
                 className="bg-[#2a2b47] hover:bg-[#484564] p-2 rounded-lg w-full"
+                data-testid='register-signup-btn'
               >
                 {isSubmitting ? "Loading..." : "Sign up"}
               </button>

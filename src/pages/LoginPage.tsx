@@ -39,7 +39,7 @@ const LoginPage = (props: Props) => {
 
   return (
     <>
-      <Toaster />
+      {/* <Toaster /> */}
       <div className="flex justify-end">
         <div className="w-[50%] bg-[#2a2b47] h-screen flex justify-center items-center">
           <div className=" bg-[#231c35] h-[400px] w-[400px] text-white rounded-lg">
