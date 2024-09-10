@@ -1,27 +1,21 @@
-import {
-  render,
-  screen,
-  fireEvent,
-  waitFor,
-  renderHook,
-} from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import RegisterComponent from "./RegisterComponent";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { AuthProvider } from "../contexts/AuthContext";
-import { BrowserRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
+import { server } from "../mocks/server";
+import { http, HttpResponse } from "msw";
+import { Wrapper } from "../__test__/Wrapper";
 
-const queryCLient = new QueryClient();
+// const queryCLient = new QueryClient();
 
-const Wrapper = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <QueryClientProvider client={queryCLient}>
-      <BrowserRouter>
-        <AuthProvider>{children}</AuthProvider>
-      </BrowserRouter>
-    </QueryClientProvider>
-  );
-};
+// const Wrapper = ({ children }: { children: React.ReactNode }) => {
+//   return (
+//     <QueryClientProvider client={queryCLient}>
+//       <BrowserRouter>
+//         <AuthProvider>{children}</AuthProvider>
+//       </BrowserRouter>
+//     </QueryClientProvider>
+//   );
+// };
 
 describe("Test the register component", () => {
   it("should render the register component after click sign up", async () => {
@@ -111,11 +105,59 @@ describe("Test the register component", () => {
 
     await userEvent.click(signUpBtn);
 
-    await waitFor(() => {
-      expect(screen.getByText("User successfully created")).toBeInTheDocument();
-    });
+    // await waitFor(() => {
+    //   expect(screen.getByText("User successfully created")).toBeInTheDocument();
+    // });
+    const message = await screen.findByText("User successfully created");
+    expect(message).toBeInTheDocument();
 
     // // eslint-disable-next-line testing-library/no-debugging-utils
     // screen.debug();
+  });
+  it("should show status 409 Conflict when using same creds", async () => {
+    server.use(
+      http.post("http://localhost:3100/user/signup", () => {
+        return HttpResponse.json(
+          {
+            message: "Email address already in use",
+          },
+          {
+            status: 409,
+            statusText: "Conflict",
+          }
+        );
+      })
+    );
+
+    render(<RegisterComponent />, { wrapper: Wrapper });
+    const registerBtn = screen.getByTestId("register-dialogShow-btn");
+
+    await userEvent.click(registerBtn);
+
+    // // eslint-disable-next-line testing-library/no-debugging-utils
+    // screen.debug();
+
+    const usernameInput = screen.getByLabelText("register-username-input");
+    const emailInput = screen.getByLabelText("register-email-input");
+    const passInput = screen.getByLabelText("register-password-input");
+    const confirmPassInput = screen.getByLabelText(
+      "register-confirmPassword-input"
+    );
+    const signUpBtn = screen.getByTestId("register-signup-btn");
+
+    await userEvent.type(usernameInput, "username");
+    await userEvent.type(emailInput, "username@mail.com");
+    await userEvent.type(passInput, "password");
+    await userEvent.type(confirmPassInput, "password");
+
+    await userEvent.click(signUpBtn);
+
+    // await waitFor(() => {
+    //   expect(screen.getByText("Email address already in use")).toBeInTheDocument();
+    // });
+    const errorMessage = await screen.findByText(
+      "Email address already in use"
+    );
+    await expect(errorMessage).toBeInTheDocument();
   });
 });

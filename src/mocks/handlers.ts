@@ -6,7 +6,6 @@ const loginTokens = {
 
     accessToken: "mocked-access-token",
     refreshToken: "mocked-refresh-token"
-
 }
 
 export const handlers = [
@@ -18,10 +17,9 @@ export const handlers = [
 
     }),
     http.post(`${backendURL}/user/signup`, (info) => {
-        
-        
+
         return HttpResponse.json({
-            message: 'User successfully created' 
-        }, {status: 201, statusText: "Created"});
+            message: 'User successfully created'
+        }, { status: 201, statusText: "Created" });
     })
 ]
