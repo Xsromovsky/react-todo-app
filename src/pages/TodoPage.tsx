@@ -5,6 +5,7 @@ import SideBar from "../components/SideBar";
 import TodosContext from "../contexts/TodoContext";
 import HeaderComponent from "../components/HeaderComponent";
 import DialogModal from "../components/DialogModal";
+
 // import toast, { Toaster } from "react-hot-toast";
 
 type Props = {};
@@ -28,7 +29,7 @@ const TodoPage = (props: Props) => {
       <div className="w-full">
         <HeaderComponent title="My todo app">
           <DialogModal>
-            <DialogModal.Button className="p-2 rounded-full bg-[#484564] hover:bg-[#5b5271] mb-2">
+            <DialogModal.Button className="p-2 rounded-full bg-[#484564] hover:bg-[#5b5271] mb-2" aria-label="todopage-new-task-btn">
               New Task
             </DialogModal.Button>
               <TodoCreate handleCreateTodo={handleCreateTodo}/>

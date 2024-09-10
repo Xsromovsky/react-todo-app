@@ -14,11 +14,11 @@ const TodoCreate = (props: Props) => {
 
   const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
-    console.log(title);
+    // console.log(title);
   };
   const handleChangeTextArea = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDescription(event.target.value);
-    console.log(description);
+    // console.log(description);
   };
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -51,7 +51,7 @@ const TodoCreate = (props: Props) => {
             value={title}
             onChange={handleChangeInput}
             isRequired
-            
+            aria-label="todoCreate-title-input"
             type="text"
             placeholder="Enter title"
             controlClassname="w-full p-1 rounded-lg bg-[#2a2b47] focus:outline-none focus:border-[#6e5774] focus:ring-[#6e5774] focus:ring-2"
@@ -66,18 +66,20 @@ const TodoCreate = (props: Props) => {
           <FormComponent.Control
             value={description}
             onChange={handleChangeTextArea}
+            data-testid="todoCreate-description-input"
+            
             type="text"
             placeholder="Enter description"
             controlClassname="w-full p-1 rounded-lg bg-[#2a2b47] focus:outline-none focus:border-[#6e5774] focus:ring-[#6e5774] focus:ring-2"
           />
         </FormComponent.Field>
         <div className="flex space-x-3 justify-end items-center mt-2">
-        <DialogModal.Close className="flex items-center p-2 hover:bg-[#484564] rounded-lg">
+        <DialogModal.Close className="flex items-center p-2 hover:bg-[#484564] rounded-lg" data-testid="todoCreate-close-btn">
           Close
         </DialogModal.Close>
 
         <FormComponent.Submit className=" flex justify-end ">
-            <span className="bg-[#2a2b47]  hover:bg-[#484564] p-2 rounded-lg ">
+            <span className="bg-[#2a2b47]  hover:bg-[#484564] p-2 rounded-lg " data-testid="todoCreate-create-btn">
               Create
             </span>
         </FormComponent.Submit>
