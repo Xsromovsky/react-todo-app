@@ -40,20 +40,16 @@ describe("testing login page", () => {
   
   it("show toaster when bad credentials typed", () => {});
   
-  it("test value inputs", () => {
+  it("test value inputs", async () => {
     render(<LoginPage />, { wrapper: Wrapper });
     
     const userNameInput = screen.getByPlaceholderText("Username");
     const passwordInput = screen.getByPlaceholderText("Password");
     
-    fireEvent.change(userNameInput, {
-      target: { value: "sam@mail.com" },
-    });
-    
-    fireEvent.change(passwordInput, {
-      target: { value: "password" },
-    });
-    
+    await userEvent.type(userNameInput,"sam@mail.com" );
+      
+    await userEvent.type(passwordInput,"password" );
+      
     expect(userNameInput).toHaveValue("sam@mail.com");
     expect(passwordInput).toHaveValue("password");
   });
