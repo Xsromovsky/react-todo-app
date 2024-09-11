@@ -36,7 +36,8 @@ function Provider(props: ProviderProps) {
   });
 
   const deletoTodoById = async (id: string) => {
-    await axios.delete(`/task/inbox/${id}`);
+    const response = await axios.delete(`/task/inbox/${id}`);
+    return response.data
     // const updatedTodos = todos.filter((todo) => {
     //   return todo.id !== id;
     // });
@@ -45,8 +46,16 @@ function Provider(props: ProviderProps) {
 
   const deleteMutation = useMutation({
     mutationFn: deletoTodoById,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["todos"] });
+    onSuccess: (data) => {
+      // queryClient.invalidateQueries({ queryKey: ["todos"] });
+      queryClient.setQueriesData<Task[]>(
+        {queryKey: ["todos"]},
+        (todos)=>{
+          return todos?.filter((todo)=>{
+            return todo.id !== data.taskId;
+          })
+        }
+      )
     },
   });
 
