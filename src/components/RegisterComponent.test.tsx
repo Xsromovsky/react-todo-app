@@ -17,6 +17,7 @@ import { Wrapper } from "../__test__/Wrapper";
 //   );
 // };
 
+
 describe("Test the register component", () => {
   it("should render the register component after click sign up", async () => {
     render(<RegisterComponent />, { wrapper: Wrapper });

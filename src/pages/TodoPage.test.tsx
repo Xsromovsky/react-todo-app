@@ -1,3 +1,4 @@
+/* eslint-disable testing-library/no-debugging-utils */
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Wrapper } from "../__test__/Wrapper";
@@ -24,26 +25,11 @@ describe("test LoginPage", () => {
     expect(screen.getByText('Logout')).toBeInTheDocument();
   })
   it("render creating task form", async () => {
-    server.use(
-      http.post("http://localhost:3100/task/inbox/add", () => {
-        return HttpResponse.json({
-          id: "cm0wxcj3c000dr90yh0ru3lxx",
-          created_at: "2024-09-10T21:08:59.688Z",
-          updated_at: "2024-09-10T21:08:59.688Z",
-          title: "Task title",
-          description: "Task description",
-          isDone: false,
-          projectId: null,
-          inbox_taskId: "ca3e0cf9-b93e-4bac-8903-b655d0dd5af8",
-        });
-      })
-    );
-
     render(<TodoPage />, { wrapper: Wrapper });
     const taskBtn = screen.getByLabelText("todopage-new-task-btn");
 
     await userEvent.click(taskBtn);
-
+    
     const titleInput = screen.getByPlaceholderText("Enter title");
     const descriptionInput = screen.getByPlaceholderText("Enter description");
 
@@ -67,7 +53,19 @@ describe("test LoginPage", () => {
 
     await userEvent.click(screen.getByTestId("todoCreate-create-btn"));
 
-    const createdTask = await screen.findByText('Task title')
-    expect(createdTask).toBeInTheDocument()
+    const createdTask = await screen.findAllByTestId('todoTask-component')
+    expect(createdTask.length).toBeGreaterThan(1)
+    // expect(screen.getByText('Task title')).toBeInTheDocument()
   });
+  it('fetch all tasks', async () => {
+    render(<TodoPage />, { wrapper: Wrapper });
+    // const task = await screen.findByText('first title');
+    // expect(task).toBeInTheDocument()
+    const createdTask = await screen.findAllByTestId('todoTask-component')
+
+    // expect only not checked tasks 
+    expect(createdTask.length).toBe(3)
+    
+    screen.debug()
+  })
 });

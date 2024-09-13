@@ -17,13 +17,14 @@ type FormControlInputProps = {
   isRequired?: boolean;
   type: string;
   value?: string;
+  ariaLabel?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 function FormControlInput(props: FormControlInputProps) {
 
   return (
-    <Form.Control asChild>
+    <Form.Control asChild aria-label={props.ariaLabel}>
       <input
         placeholder={props.placeholder || "Input"}
         className={props.controlClassname}
@@ -31,6 +32,8 @@ function FormControlInput(props: FormControlInputProps) {
         type={props.type}
         onChange={props.onChange}
         value={props.value}
+        aria-label={props.ariaLabel}
+        data-testid='input-testid'
       />
     </Form.Control>
   );

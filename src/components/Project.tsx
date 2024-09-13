@@ -41,7 +41,7 @@ const Project = (props: Props) => {
           <div className="sticky top-0 bg-[#242039] flex rounded-t-lg justify-center font-bold text-lg py-2 ">
             <label> {props.project.label} </label>
             <DialogModal>
-              <DialogModal.Button>
+              <DialogModal.Button aria-label="projectTask-add">
                 <PlusIcon className="absolute top-1 right-1 size-[30px] cursor-pointer hover:bg-[#484564] rounded-full" />
               </DialogModal.Button>
               <DialogModal.Content title="Create a new task">
@@ -52,7 +52,6 @@ const Project = (props: Props) => {
               <DialogModal.Button>
                 <SizeIcon className="absolute left-1 top-1 size-[30px] cursor-pointer hover:bg-[#484564] rounded-full" />
               </DialogModal.Button>
-
               <ProjectDetails
                 project={props.project}
                 key={props.project.id}
@@ -67,7 +66,6 @@ const Project = (props: Props) => {
         {/* <ScrollArea.Scrollbar orientation="horizontal">
       <ScrollArea.Thumb />
     </ScrollArea.Scrollbar> */}
-
         <ScrollArea.Corner className="bg-blackA5" />
       </ScrollArea.Root>
     </div>

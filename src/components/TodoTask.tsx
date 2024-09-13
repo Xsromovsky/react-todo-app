@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Task } from "../utils/todo_task";
 import TodoEdit from "./TodoEdit";
@@ -24,6 +24,7 @@ const TodoTask = (props: Props) => {
   const handleDeleteClick = (event: React.MouseEvent) => {
     event.stopPropagation();
     // props.onDelete(props.todo.id);
+    
     todosContext.deletoTodoById(props.todo.id);
   };
 
@@ -51,10 +52,10 @@ const TodoTask = (props: Props) => {
   );
 
   return (
-    <div className="" data-testid="simple-task">
+    <div className="" data-testid="todoTask-component">
       <DialogModal>
         <DialogModal.Button asChild>
-          <form className={markTitle}>
+          <form className={markTitle} data-testid="todoTask-component-form">
             <div className=" flex items-center truncate">
               <Checkbox.Root
                 className="flex-shrink-0 text-[#5b5271] hover:bg-red flex h-5 w-5 items-center justify-center rounded-[4px] bg-white"
@@ -69,8 +70,8 @@ const TodoTask = (props: Props) => {
                 <p className="m-0 px-1">{props.todo.title}</p>
             </div>
             <div className="items-center flex">
-              <span onClick={handleDeleteClick} className="cursor-pointer">
-                <TrashIcon />
+              <span onClick={handleDeleteClick} className="cursor-pointer" aria-label="todoTask-delete-btn">
+                <TrashIcon  />
               </span>
             </div>
           </form>

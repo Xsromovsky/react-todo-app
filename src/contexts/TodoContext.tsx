@@ -32,12 +32,12 @@ function Provider(props: ProviderProps) {
   const { data: todos, refetch } = useQuery<Task[]>({
     queryKey: ["todos"],
     queryFn: fetchTodos,
-    enabled: authContext.isAuthenticated
+    enabled: authContext.isAuthenticated,
   });
 
   const deletoTodoById = async (id: string) => {
     const response = await axios.delete(`/task/inbox/${id}`);
-    return response.data
+    return response.data;
     // const updatedTodos = todos.filter((todo) => {
     //   return todo.id !== id;
     // });
@@ -48,14 +48,11 @@ function Provider(props: ProviderProps) {
     mutationFn: deletoTodoById,
     onSuccess: (data) => {
       // queryClient.invalidateQueries({ queryKey: ["todos"] });
-      queryClient.setQueriesData<Task[]>(
-        {queryKey: ["todos"]},
-        (todos)=>{
-          return todos?.filter((todo)=>{
-            return todo.id !== data.taskId;
-          })
-        }
-      )
+      queryClient.setQueriesData<Task[]>({ queryKey: ["todos"] }, (todos) => {
+        return todos?.filter((todo) => {
+          return todo.id !== data.taskId;
+        });
+      });
     },
   });
 
@@ -107,7 +104,10 @@ function Provider(props: ProviderProps) {
     mutationFn: createTodo,
     onSuccess: (data) => {
       // queryClient.invalidateQueries({ queryKey: ["todos"] });
-      queryClient.setQueriesData<Task[]>({queryKey:['todos']}, (oldTodos)=>[...(oldTodos || []), data])
+      queryClient.setQueriesData<Task[]>(
+        { queryKey: ["todos"] },
+        (oldTodos) => [...(oldTodos || []), data]
+      );
     },
   });
 

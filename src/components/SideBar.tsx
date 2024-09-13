@@ -50,11 +50,11 @@ const SideBar = (props: Props) => {
   const handleProjects = () => {
     navigate("/projects");
   }
-  const handleNavigateProfile = () => {
-    // event.preventDefault();
-    // authContext.fetchProfileData();
-    navigate('/profile');
-  };
+  // const handleNavigateProfile = () => {
+  //   // event.preventDefault();
+  //   // authContext.fetchProfileData();
+  //   navigate('/profile');
+  // };
   const handleNavigateHistory = () => {
     // event.preventDefault();
     navigate("/history");
@@ -81,10 +81,10 @@ const SideBar = (props: Props) => {
             <ArchiveIcon className="size-[25px]" />
             <label className={labelClass}>Projects</label>
           </li>
-          <li className={itemClass} onClick={handleNavigateProfile}>
+          {/* <li className={itemClass} onClick={handleNavigateProfile}>
             <PersonIcon className="size-[25px]" />
             <label className={labelClass}>Profile</label>
-          </li>
+          </li> */}
           <li className={itemClass} onClick={handleNavigateHistory}>
             <ClockIcon className="size-[25px]" />
             <label className={labelClass}>History</label>

@@ -48,7 +48,6 @@ const ProjectDetails = (props: Props) => {
       <DialogModal>
         <DialogModal.Button className="flex items-center">
         <Pencil1Icon className="size-[30px] cursor-pointer hover:bg-[#484564] rounded-full p-1" />
-
         </DialogModal.Button>
         <ProjectCreate onCreate={handleProjectLabelChange} title="Edit project name"/>
       </DialogModal>

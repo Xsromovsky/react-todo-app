@@ -58,6 +58,7 @@ const ProjectTasks = (props: Props) => {
     <div
       key={props.index}
       className={markTask}
+      aria-label="projectTask"
     >
         
       <div className="flex items-center m-1  max-w-full truncate">
